@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Spectral:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  *{ box-sizing:border-box; }
+  html{ scroll-behavior:smooth; }
+  body{ margin:0; background:#F8FAFC; -webkit-font-smoothing:antialiased; }
+  @keyframes arpRise{from{transform:translateY(16px);}to{transform:translateY(0);}} [data-reveal]{ opacity:1; animation:arpRise .6s cubic-bezier(.2,.7,.2,1) both; }
+  a{ text-decoration:none; }
+  .arp-cta-primary{ transition:background .25s ease, color .25s ease, box-shadow .25s ease, transform .12s ease; }
+  .arp-cta-primary:hover{ background:#C9A227 !important; color:#0F172A !important; box-shadow:0 12px 34px -10px rgba(201,162,39,0.55) !important; }
+  .arp-card{ transition:transform .35s cubic-bezier(.2,.7,.2,1), box-shadow .35s ease, border-color .35s ease; }
+  .arp-card:hover{ transform:translateY(-6px); box-shadow:0 24px 50px -22px rgba(15,23,42,0.32) !important; border-color:rgba(201,162,39,0.4) !important; }
+</style>
+</helmet>
+
+<div style="font-family:'Inter',system-ui,sans-serif; color:#1E2937; background:#F8FAFC; overflow-x:hidden;">
+
+  <dc-import name="Header" active="claims" hint-size="100%,90px"></dc-import>
+
+  <section style="background:linear-gradient(160deg,#0F172A,#1E3A5F); color:#F8FAFC;">
+    <div style="max-width:900px; margin:0 auto; padding:clamp(48px,7vw,84px) clamp(18px,4vw,40px); text-align:center;">
+      <span style="font-size:12.5px; font-weight:600; letter-spacing:0.16em; text-transform:uppercase; color:#C9A227;">Claims we specialise in</span>
+      <h1 style="font-family:'Spectral',serif; font-weight:600; font-size:clamp(32px,4.6vw,52px); line-height:1.1; letter-spacing:-0.015em; margin:16px 0 18px;">Investment &amp; mis-selling claims we handle</h1>
+      <p style="font-size:clamp(16px,2vw,19px); line-height:1.6; color:#c7d2e0; max-width:640px; margin:0 auto;">Our panel recovers money for investors across a wide range of high-risk and mis-sold schemes. If your investment is below — or even if it isn't — a free assessment will tell you where you stand.</p>
+    </div>
+  </section>
+
+  <section style="background:#F8FAFC;">
+    <div style="max-width:1240px; margin:0 auto; padding:clamp(56px,8vw,96px) clamp(18px,4vw,40px);">
+      <div data-reveal style="display:grid; grid-template-columns:repeat(auto-fit,minmax(300px,1fr)); gap:22px;">
+        <sc-for list="{{ claims }}" as="c" hint-placeholder-count="8">
+          <div class="arp-card" style="background:#fff; border:1px solid #e7edf4; border-radius:18px; padding:32px; display:flex; flex-direction:column;">
+            <div style="width:52px; height:52px; border-radius:13px; background:rgba(201,162,39,0.1); display:flex; align-items:center; justify-content:center; margin-bottom:20px; color:#C9A227;">{{ c.icon }}</div>
+            <h3 style="font-family:'Spectral',serif; font-size:21px; font-weight:600; color:#0F172A; margin:0 0 11px;">{{ c.title }}</h3>
+            <p style="font-size:15px; line-height:1.65; color:#64748B; margin:0 0 18px; flex:1;">{{ c.desc }}</p>
+            <div style="padding:14px 16px; background:#F8FAFC; border-radius:11px; border:1px solid #eef2f7;">
+              <div style="font-size:11.5px; font-weight:600; letter-spacing:0.06em; text-transform:uppercase; color:#1E3A5F; margin-bottom:5px;">You may have a claim if</div>
+              <div style="font-size:13.5px; line-height:1.55; color:#475569;">{{ c.sign }}</div>
+            </div>
+          </div>
+        </sc-for>
+      </div>
+
+      <div data-reveal style="margin-top:48px; background:#fff; border:1px solid #e7edf4; border-radius:18px; padding:clamp(28px,4vw,44px); text-align:center;">
+        <h2 style="font-family:'Spectral',serif; font-size:clamp(22px,3vw,30px); font-weight:600; color:#0F172A; margin:0 0 12px;">Don't see your scheme?</h2>
+        <p style="font-size:16px; line-height:1.65; color:#64748B; max-width:620px; margin:0 auto 26px;">Our panel handles high-risk and mis-sold investments of every kind — including unregulated collective investment schemes (UCIS), mini-bonds, storage and car-park schemes, and more. Tell us what happened and we'll let you know whether we can help.</p>
+        <a class="arp-cta-primary" href="contact.dc.html" style="display:inline-block; background:#0F172A; color:#F8FAFC; padding:17px 32px; border-radius:11px; font-size:16px; font-weight:600;">Check your claim for free →</a>
+      </div>
+    </div>
+  </section>
+
+  <dc-import name="Footer" hint-size="100%,420px"></dc-import>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  componentDidMount() { this._reveal(); }
+  componentDidUpdate() { this._reveal(); }
+  _reveal() {
+    const reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const els = Array.from(document.querySelectorAll('[data-reveal]'));
+    if (reduce || !('IntersectionObserver' in window)) { els.forEach(el => { el.style.opacity = '1'; el.style.transform = 'none'; }); return; }
+    if (!this._io) { this._io = new IntersectionObserver((ents) => ents.forEach(e => { if (e.isIntersecting) { e.target.style.opacity = '1'; e.target.style.transform = 'none'; this._io.unobserve(e.target); } }), { threshold: 0.1, rootMargin: '0px 0px -50px 0px' }); }
+    els.forEach(el => { if (!el._obs) { el._obs = true; this._io.observe(el); } });
+  }
+  componentWillUnmount() { if (this._io) this._io.disconnect(); }
+  renderVals() {
+    const svg = (...c) => React.createElement('svg', { width: 24, height: 24, viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', strokeWidth: 1.9, strokeLinecap: 'round', strokeLinejoin: 'round' }, ...c);
+    const p = (d) => React.createElement('path', { d });
+    const claims = [
+      { title: 'Fine art & portfolio investments', desc: 'Art "funds", fractional ownership and curated portfolios sold on inflated valuations or false promises of liquidity and resale. When it came time to sell, the market — or the value — simply was not there.', sign: 'You were told the art could be sold easily for a profit, or valuations now look far higher than the work could fetch.', icon: svg(React.createElement('rect', { x: 3, y: 3, width: 18, height: 18, rx: 2 }), React.createElement('circle', { cx: 8.5, cy: 8.5, r: 1.6 }), p('m21 15-5-5L5 21')) },
+      { title: 'Whiskey cask & spirits schemes', desc: 'Cask ownership and maturation schemes promising strong, "low-risk" appreciation. Many investors later found the casks were unverifiable, overpriced, loaded with hidden storage and insurance fees, or impossible to sell on.', sign: 'You cannot independently verify your cask, fees keep mounting, or the company has stopped responding.', icon: svg(p('M12 2.5S6 9 6 14a6 6 0 0 0 12 0c0-5-6-11.5-6-11.5z')) },
+      { title: 'Vertical farming & agriculture', desc: 'Sustainable-agriculture, vertical-farming and ethical-forestry projects marketed on attractive "green" returns. In many cases the projects never reached production, or the promised yields never materialised.', sign: 'The project stalled, updates dried up, or the returns you were shown never arrived.', icon: svg(p('M12 22V11'), p('M12 11C12 7 9 5 5 5c0 4 3 6 7 6z'), p('M12 9c0-3 3-5 7-5 0 3-3 5-7 5z')) },
+      { title: 'Carbon credits & green energy', desc: 'Carbon-offset certificates and green-energy schemes sold to private investors as "the next big thing". The FCA does not regulate carbon-credit sales, and many investors found their credits effectively impossible to trade.', sign: 'You were cold-called or pitched at a seminar, and now cannot sell or trade your credits.', icon: svg(p('M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10z'), p('M2 22 17 7')) },
+      { title: 'Mis-sold pensions & SIPPs', desc: 'Final-salary, workplace or personal pensions transferred into high-risk Self-Invested Personal Pensions (SIPPs) and unsuitable, often unregulated, underlying investments — frequently after a "free pension review" or cold call.', sign: 'You were advised to transfer a secure pension into a SIPP holding risky or unregulated assets and have since lost value.', icon: svg(p('M3 21h18'), p('M4 21V10h16v11'), p('m3 10 9-6 9 6'), p('M9 21v-6h6v6')) },
+      { title: 'Cryptocurrency & blockchain', desc: 'Crypto investment fraud, cloned or fake exchanges, fake trading apps, "pig-butchering" and blockchain schemes promoted on misleading advice. Claims are often pursued against banks that allowed the payments, alongside asset tracing.', sign: 'A "broker" or online contact persuaded you to deposit funds and the platform later blocked withdrawals or vanished.', icon: svg(React.createElement('polygon', { points: '12 2 20 7 20 17 12 22 4 17 4 7' }), p('M9.5 14V9.5h2.6a2.25 2.25 0 0 1 0 4.5H9.5')) },
+      { title: 'Forex, CFD & trading platforms', desc: 'Losses on contracts-for-difference, forex, binary options and "boiler-room" trading platforms run on manipulated terms, high-pressure sales and unsuitable advice — often by firms that were never properly authorised.', sign: 'You were pressured to keep depositing, shown impressive "gains" you could not withdraw, or used an unregulated platform.', icon: svg(React.createElement('polyline', { points: '3 17 9 11 13 15 21 7' }), React.createElement('polyline', { points: '15 7 21 7 21 13' })) },
+      { title: 'Land banking & overseas property', desc: 'Land plots, storage pods, car-park and overseas-property schemes sold on the promise of planning permission, development uplift or guaranteed rental returns that never came — leaving investors with assets they cannot sell.', sign: 'You were promised planning gains or rental income that never arrived, and the asset is now hard to value or sell.', icon: svg(p('M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z'), React.createElement('circle', { cx: 12, cy: 10, r: 3 })) }
+    ];
+    return { claims };
+  }
+}
+</script>
+</body>
+</html>

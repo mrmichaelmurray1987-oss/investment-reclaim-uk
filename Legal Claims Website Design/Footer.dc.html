@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@1,600;1,700&family=Inter:wght@400;500;600;700&family=Spectral:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  .arp-foot-link{ transition:color .2s ease; }
+  .arp-foot-link:hover{ color:#C9A227 !important; }
+  .arp-ck-accept{ transition:background .2s ease, box-shadow .2s ease; }
+  .arp-ck-accept:hover{ box-shadow:0 10px 26px -8px rgba(201,162,39,0.55) !important; }
+  .arp-ck-reject{ transition:border-color .2s ease, color .2s ease; }
+  .arp-ck-reject:hover{ border-color:#C9A227 !important; color:#C9A227 !important; }
+  @keyframes arpCkIn{ from{ opacity:0; transform:translateY(20px); } to{ opacity:1; transform:translateY(0); } }
+</style>
+</helmet>
+<footer id="footer" style="background:#0a1120; color:#94a3b8; font-family:'Inter',system-ui,sans-serif;">
+  <div style="max-width:1240px; margin:0 auto; padding:clamp(48px,6vw,76px) clamp(18px,4vw,40px) 36px;">
+    <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:40px; padding-bottom:40px; border-bottom:1px solid rgba(255,255,255,0.08);">
+
+      <div style="grid-column:span 1; min-width:240px;">
+        <div style="display:flex; align-items:center; gap:13px; margin-bottom:18px;">
+          <svg width="42" height="42" viewBox="0 0 44 44" fill="none" style="flex:none;">
+            <circle cx="22" cy="22" r="20.6" stroke="#C9A227" stroke-width="1.2"/>
+            <circle cx="22" cy="22" r="16.8" stroke="#C9A227" stroke-width="0.7" opacity="0.5"/>
+            <path d="M22 2.4 l1.5 1.6 -1.5 1.6 -1.5 -1.6 z" fill="#C9A227"/>
+            <path d="M22 38.4 l1.5 1.6 -1.5 1.6 -1.5 -1.6 z" fill="#C9A227"/>
+            <text x="22" y="24.2" text-anchor="middle" dominant-baseline="middle" font-family="'Cormorant Garamond', serif" font-style="italic" font-weight="700" font-size="22" letter-spacing="-0.5" fill="#C9A227">IR</text>
+          </svg>
+          <span style="font-family:'Spectral',serif; font-weight:600; font-size:16px; letter-spacing:0.1em; color:#F8FAFC;">INVESTMENT RECLAIM <span style="color:#C9A227;">UK</span></span>
+        </div>
+        <p style="font-size:14px; line-height:1.65; max-width:320px; margin:0;">A discreet, premium claims-introduction service connecting UK investors with a curated panel of specialist, SRA-regulated solicitors.</p>
+      </div>
+
+      <div>
+        <div style="font-size:12px; font-weight:600; letter-spacing:0.12em; text-transform:uppercase; color:#cbd5e1; margin-bottom:16px;">Navigate</div>
+        <div style="display:flex; flex-direction:column; gap:11px;">
+          <a class="arp-foot-link" href="index.dc.html" style="font-size:14px; color:#94a3b8;">Home</a>
+          <a class="arp-foot-link" href="how-it-works.dc.html" style="font-size:14px; color:#94a3b8;">How It Works</a>
+          <a class="arp-foot-link" href="our-panel.dc.html" style="font-size:14px; color:#94a3b8;">Our Panel</a>
+          <a class="arp-foot-link" href="claims.dc.html" style="font-size:14px; color:#94a3b8;">Claims We Handle</a>
+        </div>
+      </div>
+
+      <div>
+        <div style="font-size:12px; font-weight:600; letter-spacing:0.12em; text-transform:uppercase; color:#cbd5e1; margin-bottom:16px;">More</div>
+        <div style="display:flex; flex-direction:column; gap:11px;">
+          <a class="arp-foot-link" href="success-stories.dc.html" style="font-size:14px; color:#94a3b8;">Success Stories</a>
+          <a class="arp-foot-link" href="blog.dc.html" style="font-size:14px; color:#94a3b8;">Blog &amp; Guides</a>
+          <a class="arp-foot-link" href="faq.dc.html" style="font-size:14px; color:#94a3b8;">FAQ</a>
+          <a class="arp-foot-link" href="contact.dc.html" style="font-size:14px; color:#94a3b8;">Free Assessment</a>
+        </div>
+      </div>
+
+      <div>
+        <div style="font-size:12px; font-weight:600; letter-spacing:0.12em; text-transform:uppercase; color:#cbd5e1; margin-bottom:16px;">Legal &amp; compliance</div>
+        <div style="display:flex; flex-direction:column; gap:11px;">
+          <a class="arp-foot-link" href="privacy-policy.dc.html" style="font-size:14px; color:#94a3b8;">Privacy Policy</a>
+          <a class="arp-foot-link" href="privacy-policy.dc.html#gdpr" style="font-size:14px; color:#94a3b8;">GDPR &amp; Data Protection</a>
+          <a class="arp-foot-link" href="cookie-policy.dc.html" style="font-size:14px; color:#94a3b8;">Cookie Policy</a>
+          <a class="arp-foot-link" href="terms.dc.html" style="font-size:14px; color:#94a3b8;">Terms &amp; Conditions</a>
+          <a class="arp-foot-link" href="terms.dc.html#nwnf" style="font-size:14px; color:#94a3b8;">No Win, No Fee Terms</a>
+          <a class="arp-foot-link" href="#" onClick="{{ openCookies }}" style="font-size:14px; color:#94a3b8;">Cookie Preferences</a>
+        </div>
+      </div>
+
+      <div>
+        <div style="font-size:12px; font-weight:600; letter-spacing:0.12em; text-transform:uppercase; color:#cbd5e1; margin-bottom:16px;">Confidential contact</div>
+        <div style="display:flex; flex-direction:column; gap:11px;">
+          <a class="arp-foot-link" href="tel:08004700000" style="font-size:15px; font-weight:600; color:#C9A227;">0800 470 0000</a>
+          <a class="arp-foot-link" href="mailto:info@investmentreclaimuk.co.uk" style="font-size:14px; color:#94a3b8;">info@investmentreclaimuk.co.uk</a>
+          <span style="font-size:14px; color:#94a3b8;">Mon–Fri, 9am–6pm</span>
+        </div>
+      </div>
+    </div>
+
+    <div style="padding-top:30px;">
+      <p style="font-size:12.5px; line-height:1.7; color:#64748B; margin:0 0 14px; max-width:1000px;">
+        <strong style="color:#94a3b8;">Important — please read.</strong> Investment Reclaim UK is a claims introduction service. We are not a firm of solicitors and do not provide legal advice. We work exclusively with a panel of SRA-regulated solicitors and may receive a fee for introductions. Individual outcomes vary and depend on the specific circumstances of each case. Past results do not guarantee future success. There are strict time limits for bringing claims. Your information is handled in strict confidence and in accordance with the UK GDPR and the Data Protection Act 2018. Figures and client experiences shown are illustrative. Investment Reclaim UK is a trading style of Coresight Creative, company number 16828110, registered at 128 City Road, London, United Kingdom, EC1V 2NX.
+      </p>
+      <div style="display:flex; flex-wrap:wrap; gap:8px 20px; align-items:center; justify-content:space-between; margin-top:18px;">
+        <span style="font-size:12.5px; color:#475569;">© 2026 Investment Reclaim UK. All rights reserved.</span>
+        <div style="display:flex; flex-wrap:wrap; gap:8px 18px;">
+          <a class="arp-foot-link" href="privacy-policy.dc.html" style="font-size:12.5px; color:#64748B;">Privacy Policy</a>
+          <a class="arp-foot-link" href="cookie-policy.dc.html" style="font-size:12.5px; color:#64748B;">Cookie Policy</a>
+          <a class="arp-foot-link" href="terms.dc.html" style="font-size:12.5px; color:#64748B;">Terms &amp; Conditions</a>
+          <a class="arp-foot-link" href="#" onClick="{{ openCookies }}" style="font-size:12.5px; color:#64748B;">Cookie Preferences</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- COOKIE CONSENT BANNER -->
+  <sc-if value="{{ showBanner }}" hint-placeholder-val="{{ false }}">
+  <div style="position:fixed; left:0; right:0; bottom:0; z-index:200; display:flex; justify-content:center; padding:clamp(12px,3vw,24px); pointer-events:none;">
+    <div style="pointer-events:auto; width:100%; max-width:1080px; background:rgba(13,20,34,0.98); backdrop-filter:blur(8px); border:1px solid rgba(201,162,39,0.3); border-radius:16px; box-shadow:0 30px 70px -20px rgba(0,0,0,0.6); padding:clamp(20px,3vw,28px); display:flex; flex-wrap:wrap; align-items:center; gap:18px 28px; animation:arpCkIn .4s cubic-bezier(.2,.7,.2,1);">
+      <div style="flex:1; min-width:260px;">
+        <div style="display:flex; align-items:center; gap:10px; margin-bottom:8px;">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#C9A227" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a10 10 0 1 0 10 10 4 4 0 0 1-5-5 4 4 0 0 1-5-5z"/><path d="M8.5 8.5h.01M16 11h.01M11 15h.01"/></svg>
+          <span style="font-family:'Spectral',serif; font-size:17px; font-weight:600; color:#F8FAFC;">Your privacy matters</span>
+        </div>
+        <p style="font-size:13.5px; line-height:1.6; color:#aebccd; margin:0;">We use essential cookies to make this site work and, with your consent, analytics cookies to understand how it is used. You can accept or reject non-essential cookies. Read our <a href="cookie-policy.dc.html" style="color:#C9A227; text-decoration:underline;">Cookie Policy</a> and <a href="privacy-policy.dc.html" style="color:#C9A227; text-decoration:underline;">Privacy Policy</a>.</p>
+      </div>
+      <div style="display:flex; gap:12px; flex-wrap:wrap;">
+        <button class="arp-ck-reject" onClick="{{ reject }}" style="background:transparent; color:#e2e8f0; border:1.5px solid rgba(248,250,252,0.3); border-radius:9px; padding:12px 22px; font-family:'Inter',sans-serif; font-size:14px; font-weight:600; cursor:pointer; white-space:nowrap;">Reject non-essential</button>
+        <button class="arp-ck-accept" onClick="{{ accept }}" style="background:#C9A227; color:#0F172A; border:none; border-radius:9px; padding:12px 24px; font-family:'Inter',sans-serif; font-size:14px; font-weight:700; cursor:pointer; white-space:nowrap;">Accept all cookies</button>
+      </div>
+    </div>
+  </div>
+  </sc-if>
+</footer>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1240,&quot;height&quot;:460}}">
+class Component extends DCLogic {
+  state = { showBanner: false };
+  componentDidMount() {
+    let decided = false;
+    try { decided = !!localStorage.getItem('arp-cookie-consent'); } catch (e) { decided = false; }
+    if (!decided) this.setState({ showBanner: true });
+  }
+  _set(v) {
+    try { localStorage.setItem('arp-cookie-consent', v); } catch (e) {}
+    this.setState({ showBanner: false });
+  }
+  renderVals() {
+    return {
+      showBanner: this.state.showBanner,
+      accept: () => this._set('accepted'),
+      reject: () => this._set('rejected'),
+      openCookies: (e) => { if (e && e.preventDefault) e.preventDefault(); this.setState({ showBanner: true }); }
+    };
+  }
+}
+</script>
+</body>
+</html>

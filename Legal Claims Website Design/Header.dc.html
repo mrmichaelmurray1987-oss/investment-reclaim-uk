@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@1,600;1,700&family=Inter:wght@400;500;600;700&family=Spectral:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  .arp-link{ position:relative; }
+  .arp-link::after{ content:""; position:absolute; left:0; bottom:-4px; width:0; height:1.5px; background:#C9A227; transition:width .28s ease; }
+  .arp-link:hover::after{ width:100%; }
+  .arp-cta-primary{ transition:background .25s ease, color .25s ease, box-shadow .25s ease, transform .12s ease; }
+  .arp-cta-primary:hover{ background:#C9A227 !important; color:#0F172A !important; box-shadow:0 12px 34px -10px rgba(201,162,39,0.55) !important; }
+  .arp-cta-primary:active{ transform:translateY(1px); }
+  @media (max-width:980px){ .arp-nav-desktop{ display:none !important; } .arp-hamburger{ display:inline-flex !important; } }
+  @media (min-width:981px){ .arp-hamburger{ display:none !important; } .arp-mobile-menu{ display:none !important; } }
+</style>
+</helmet>
+<header style="position:sticky; top:0; z-index:60; background:rgba(15,23,42,0.97); backdrop-filter:saturate(140%) blur(8px); border-bottom:1px solid rgba(201,162,39,0.18); font-family:'Inter',system-ui,sans-serif;">
+  <div style="max-width:1240px; margin:0 auto; padding:15px clamp(18px,4vw,40px); display:flex; align-items:center; justify-content:space-between; gap:18px;">
+
+    <a href="index.dc.html" style="display:flex; align-items:center; gap:13px; flex:none;">
+      <svg width="44" height="44" viewBox="0 0 44 44" fill="none" style="flex:none;">
+        <circle cx="22" cy="22" r="20.6" stroke="#C9A227" stroke-width="1.2"/>
+        <circle cx="22" cy="22" r="16.8" stroke="#C9A227" stroke-width="0.7" opacity="0.5"/>
+        <path d="M22 2.4 l1.5 1.6 -1.5 1.6 -1.5 -1.6 z" fill="#C9A227"/>
+        <path d="M22 38.4 l1.5 1.6 -1.5 1.6 -1.5 -1.6 z" fill="#C9A227"/>
+        <text x="22" y="24.2" text-anchor="middle" dominant-baseline="middle" font-family="'Cormorant Garamond', serif" font-style="italic" font-weight="700" font-size="22" letter-spacing="-0.5" fill="#C9A227">IR</text>
+      </svg>
+      <span style="font-family:'Spectral',serif; font-weight:600; font-size:17px; letter-spacing:0.1em; color:#F8FAFC;">INVESTMENT RECLAIM <span style="color:#C9A227;">UK</span></span>
+    </a>
+
+    <nav class="arp-nav-desktop" style="display:flex; align-items:center; gap:24px;">
+      <sc-for list="{{ nav }}" as="i" hint-placeholder-count="6">
+        <a class="arp-link" href="{{ i.href }}" style="{{ i.style }}">{{ i.label }}</a>
+      </sc-for>
+    </nav>
+
+    <div style="display:flex; align-items:center; gap:14px;">
+      <a class="arp-nav-desktop" href="tel:08004700000" style="display:flex; align-items:center; gap:8px; color:#F8FAFC;">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#C9A227" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+        <span style="display:flex; flex-direction:column; line-height:1.1;">
+          <span style="font-size:9.5px; color:#94a3b8; letter-spacing:0.04em;">CONFIDENTIAL LINE</span>
+          <span style="font-size:14.5px; font-weight:600;">0800 470 0000</span>
+        </span>
+      </a>
+      <a class="arp-cta-primary" href="contact.dc.html" style="background:#C9A227; color:#0F172A; padding:12px 20px; border-radius:9px; font-size:14px; font-weight:600; white-space:nowrap;">Get Free Assessment</a>
+      <button class="arp-hamburger" onClick="{{ toggleNav }}" aria-label="Menu" style="display:none; width:42px; height:42px; align-items:center; justify-content:center; background:transparent; border:1px solid rgba(248,250,252,0.25); border-radius:8px; cursor:pointer;">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#F8FAFC" stroke-width="2" stroke-linecap="round"><line x1="4" y1="7" x2="20" y2="7"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="17" x2="20" y2="17"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <sc-if value="{{ navOpen }}" hint-placeholder-val="{{ false }}">
+  <div class="arp-mobile-menu" style="border-top:1px solid rgba(201,162,39,0.15); padding:12px clamp(18px,4vw,40px) 22px; display:flex; flex-direction:column; gap:2px; background:rgba(15,23,42,0.99);">
+    <sc-for list="{{ nav }}" as="i" hint-placeholder-count="6">
+      <a href="{{ i.href }}" onClick="{{ closeNav }}" style="{{ i.mstyle }}">{{ i.label }}</a>
+    </sc-for>
+    <a href="contact.dc.html" onClick="{{ closeNav }}" style="margin-top:12px; text-align:center; background:#C9A227; color:#0F172A; padding:13px; border-radius:9px; font-size:15px; font-weight:600;">Get Free Assessment</a>
+    <a href="tel:08004700000" style="margin-top:10px; font-size:15px; font-weight:600; color:#C9A227;">Call 0800 470 0000</a>
+  </div>
+  </sc-if>
+</header>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1240,&quot;height&quot;:90},&quot;active&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;&quot;,&quot;tsType&quot;:&quot;string&quot;}}">
+class Component extends DCLogic {
+  state = { navOpen: false };
+  renderVals() {
+    const active = this.props.active || '';
+    const items = [
+      { key: 'how', label: 'How It Works', href: 'how-it-works.dc.html' },
+      { key: 'panel', label: 'Our Panel', href: 'our-panel.dc.html' },
+      { key: 'claims', label: 'Claims', href: 'claims.dc.html' },
+      { key: 'stories', label: 'Success Stories', href: 'success-stories.dc.html' },
+      { key: 'blog', label: 'Blog', href: 'blog.dc.html' },
+      { key: 'faq', label: 'FAQ', href: 'faq.dc.html' }
+    ];
+    const nav = items.map(i => ({
+      label: i.label,
+      href: i.href,
+      style: { position: 'relative', fontSize: '14.5px', fontWeight: active === i.key ? 600 : 500, color: active === i.key ? '#C9A227' : '#cbd5e1' },
+      mstyle: { padding: '13px 4px', fontSize: '16px', color: active === i.key ? '#C9A227' : '#e2e8f0', borderBottom: '1px solid rgba(255,255,255,0.06)' }
+    }));
+    return {
+      nav,
+      navOpen: this.state.navOpen,
+      toggleNav: () => this.setState(s => ({ navOpen: !s.navOpen })),
+      closeNav: () => this.setState({ navOpen: false })
+    };
+  }
+}
+</script>
+</body>
+</html>

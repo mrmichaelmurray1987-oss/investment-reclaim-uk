@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Spectral:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  *{ box-sizing:border-box; }
+  html{ scroll-behavior:smooth; }
+  body{ margin:0; background:#F8FAFC; -webkit-font-smoothing:antialiased; }
+  @keyframes arpRise{from{transform:translateY(16px);}to{transform:translateY(0);}} [data-reveal]{ opacity:1; animation:arpRise .6s cubic-bezier(.2,.7,.2,1) both; }
+  a{ text-decoration:none; }
+  .arp-cta-primary{ transition:background .25s ease, color .25s ease, box-shadow .25s ease, transform .12s ease; }
+  .arp-cta-primary:hover{ background:#C9A227 !important; color:#0F172A !important; box-shadow:0 12px 34px -10px rgba(201,162,39,0.55) !important; }
+  .arp-card{ transition:transform .35s cubic-bezier(.2,.7,.2,1), box-shadow .35s ease, border-color .35s ease; }
+  .arp-card:hover{ transform:translateY(-6px); box-shadow:0 24px 50px -22px rgba(15,23,42,0.32) !important; border-color:rgba(201,162,39,0.4) !important; }
+</style>
+</helmet>
+
+<div style="font-family:'Inter',system-ui,sans-serif; color:#1E2937; background:#F8FAFC; overflow-x:hidden;">
+
+  <dc-import name="Header" active="stories" hint-size="100%,90px"></dc-import>
+
+  <section style="background:linear-gradient(160deg,#0F172A,#1E3A5F); color:#F8FAFC;">
+    <div style="max-width:900px; margin:0 auto; padding:clamp(48px,7vw,84px) clamp(18px,4vw,40px); text-align:center;">
+      <span style="font-size:12.5px; font-weight:600; letter-spacing:0.16em; text-transform:uppercase; color:#C9A227;">Success stories</span>
+      <h1 style="font-family:'Spectral',serif; font-weight:600; font-size:clamp(32px,4.6vw,52px); line-height:1.1; letter-spacing:-0.015em; margin:16px 0 18px;">Quiet outcomes, handled with discretion</h1>
+      <p style="font-size:clamp(16px,2vw,19px); line-height:1.6; color:#c7d2e0; max-width:640px; margin:0 auto;">A selection of experiences from investors our panel has assisted across pensions, crypto, art, whiskey, farming and more. Names are abbreviated to protect client confidentiality.</p>
+    </div>
+  </section>
+
+  <!-- HANDSHAKE BAND -->
+  <section style="background:#fff;">
+    <div style="max-width:1240px; margin:0 auto; padding:clamp(40px,5vw,64px) clamp(18px,4vw,40px) 0;">
+      <div data-reveal style="position:relative; border-radius:18px; overflow:hidden;">
+        <img src="assets/handshake.png" alt="Solicitor and client shaking hands after a successful claim" loading="lazy" style="display:block; width:100%; height:clamp(220px,30vw,360px); border:1px solid #e7edf4; object-fit:cover; object-position:center; border-radius:18px;" />
+      </div>
+    </div>
+  </section>
+
+  <section style="background:#fff;">
+    <div style="max-width:1240px; margin:0 auto; padding:clamp(40px,5vw,64px) clamp(18px,4vw,40px) clamp(56px,8vw,96px);">
+      <div data-reveal style="columns:3 320px; column-gap:22px;">
+        <sc-for list="{{ testimonials }}" as="t" hint-placeholder-count="10">
+          <div class="arp-card" style="break-inside:avoid; margin-bottom:22px; background:#F8FAFC; border:1px solid #e7edf4; border-radius:16px; padding:28px; display:inline-block; width:100%;">
+            <div style="display:flex; gap:2px; color:#C9A227; font-size:15px; letter-spacing:1px; margin-bottom:14px;">★★★★★</div>
+            <p style="font-family:'Spectral',serif; font-size:16.5px; line-height:1.62; color:#1E2937; margin:0 0 22px;">"{{ t.quote }}"</p>
+            <div style="display:flex; align-items:center; gap:13px; padding-top:18px; border-top:1px solid #e7edf4;">
+              <div style="width:44px; height:44px; border-radius:50%; background:#1E3A5F; color:#F8FAFC; display:flex; align-items:center; justify-content:center; font-family:'Spectral',serif; font-weight:600; font-size:15px; flex:none;">{{ t.initials }}</div>
+              <div style="flex:1;"><div style="font-size:14.5px; font-weight:600; color:#0F172A;">{{ t.name }}</div><div style="font-size:13px; color:#64748B;">{{ t.meta }}</div></div>
+              <div style="font-size:12px; font-weight:600; color:#1E8A5B; background:rgba(30,138,91,0.1); padding:5px 10px; border-radius:7px; white-space:nowrap;">{{ t.outcome }}</div>
+            </div>
+          </div>
+        </sc-for>
+      </div>
+      <p style="text-align:center; font-size:12.5px; color:#94a3b8; margin:18px auto 0; max-width:680px;">Illustrative client experiences. Individual outcomes vary and depend on the specific circumstances of each case. Past results do not guarantee future success.</p>
+    </div>
+  </section>
+
+  <section style="background:#0F172A; position:relative; overflow:hidden;">
+    <div style="position:absolute; inset:0; background-image:radial-gradient(circle at 50% 120%, rgba(201,162,39,0.18), transparent 55%); pointer-events:none;"></div>
+    <div data-reveal style="position:relative; max-width:760px; margin:0 auto; padding:clamp(56px,8vw,96px) clamp(18px,4vw,40px); text-align:center; color:#F8FAFC;">
+      <h2 style="font-family:'Spectral',serif; font-weight:600; font-size:clamp(28px,4vw,44px); line-height:1.12; letter-spacing:-0.02em; margin:0 0 20px;">Could your story be next?</h2>
+      <p style="font-size:clamp(16px,2vw,19px); line-height:1.6; color:#c7d2e0; max-width:560px; margin:0 auto 32px;">Find out where you stand with a free, confidential assessment — no obligation.</p>
+      <a class="arp-cta-primary" href="contact.dc.html" style="display:inline-block; background:#C9A227; color:#0F172A; padding:18px 34px; border-radius:11px; font-size:17px; font-weight:700;">Start Your Free Assessment →</a>
+    </div>
+  </section>
+
+  <dc-import name="Footer" hint-size="100%,420px"></dc-import>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  componentDidMount() { this._reveal(); }
+  componentDidUpdate() { this._reveal(); }
+  _reveal() {
+    const reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const els = Array.from(document.querySelectorAll('[data-reveal]'));
+    if (reduce || !('IntersectionObserver' in window)) { els.forEach(el => { el.style.opacity = '1'; el.style.transform = 'none'; }); return; }
+    if (!this._io) { this._io = new IntersectionObserver((ents) => ents.forEach(e => { if (e.isIntersecting) { e.target.style.opacity = '1'; e.target.style.transform = 'none'; this._io.unobserve(e.target); } }), { threshold: 0.05, rootMargin: '0px 0px -40px 0px' }); }
+    els.forEach(el => { if (!el._obs) { el._obs = true; this._io.observe(el); } });
+  }
+  componentWillUnmount() { if (this._io) this._io.disconnect(); }
+  renderVals() {
+    const testimonials = [
+      { initials: 'J.M.', name: 'James M.', meta: 'Surrey · Fine art portfolio', outcome: 'Recovered majority', quote: 'The process was handled with complete discretion and genuine expertise. I had almost written the money off — their panel solicitor recovered the majority of my investment.' },
+      { initials: 'B.K.', name: 'Brian K.', meta: 'Newcastle · Mis-sold SIPP', outcome: 'Pension restored', quote: 'I was advised to move my final-salary pension into a SIPP full of unregulated investments. Their solicitor recovered what I had lost — I can retire as planned.' },
+      { initials: 'S.A.', name: 'Sana A.', meta: 'Manchester · Crypto platform', outcome: 'Funds traced', quote: 'A "broker" talked me into a crypto platform that vanished overnight. I assumed the money was gone. The team traced it and pursued recovery with real professionalism.' },
+      { initials: 'RT', name: 'R. & S. T.', meta: 'Cheshire · Whiskey casks', outcome: 'Settled in full', quote: 'We felt embarrassed to have been caught out. There was no judgement here — just calm, professional people who knew exactly what to do.' },
+      { initials: 'D.H.', name: 'Dr D. H.', meta: 'Edinburgh · Vertical farming', outcome: 'Significant settlement', quote: 'They matched me with a solicitor who specialised in precisely this type of agricultural scheme. The difference that made was enormous.' },
+      { initials: 'A.P.', name: 'Angela P.', meta: 'London · Mixed portfolio', outcome: 'Claim succeeded', quote: 'Regular, clear updates throughout. At no point was I left wondering what was happening with my case. Premium service from start to finish.' },
+      { initials: 'M.C.', name: 'Martin C.', meta: 'Bristol · Carbon credits', outcome: 'Recovered funds', quote: 'I am a fairly experienced investor, so being mis-sold stung. The team were respectful of that and got me to the right people quickly.' },
+      { initials: 'L.W.', name: 'Lorraine W.', meta: 'Leeds · Whiskey casks', outcome: 'No win, no fee', quote: 'The No Win, No Fee arrangement meant I could pursue the claim without risking more money. That reassurance was everything.' },
+      { initials: 'G.R.', name: 'Geoffrey R.', meta: 'Kent · Fine art fund', outcome: 'Substantial recovery', quote: 'Discreet, measured and never pushy. It felt like dealing with a private office rather than a claims company.' },
+      { initials: 'PN', name: 'P. & E. N.', meta: 'Glasgow · Agriculture scheme', outcome: 'Settled', quote: 'After two years of silence from the scheme, having someone competent and calm take charge was an enormous relief.' },
+      { initials: 'F.D.', name: 'Farah D.', meta: 'Birmingham · Forex platform', outcome: 'Refund secured', quote: 'I had been pressured into topping up a trading account again and again. They challenged my bank and secured a refund I never expected to see.' },
+      { initials: 'C.W.', name: 'Colin W.', meta: 'Cardiff · Land banking', outcome: 'Compensation', quote: 'The plot I bought never got planning permission. They pointed me to a solicitor who understood land-banking cases inside out.' }
+    ];
+    return { testimonials };
+  }
+}
+</script>
+</body>
+</html>

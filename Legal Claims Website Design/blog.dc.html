@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Spectral:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  *{ box-sizing:border-box; }
+  html{ scroll-behavior:smooth; }
+  body{ margin:0; background:#F8FAFC; -webkit-font-smoothing:antialiased; }
+  @keyframes arpRise{from{transform:translateY(16px);}to{transform:translateY(0);}} [data-reveal]{ opacity:1; animation:arpRise .6s cubic-bezier(.2,.7,.2,1) both; }
+  a{ text-decoration:none; }
+  .arp-cta-primary{ transition:background .25s ease, color .25s ease, box-shadow .25s ease, transform .12s ease; }
+  .arp-cta-primary:hover{ background:#C9A227 !important; color:#0F172A !important; box-shadow:0 12px 34px -10px rgba(201,162,39,0.55) !important; }
+  .arp-post{ transition:transform .35s cubic-bezier(.2,.7,.2,1), box-shadow .35s ease, border-color .35s ease; cursor:pointer; }
+  .arp-post:hover{ transform:translateY(-6px); box-shadow:0 24px 50px -22px rgba(15,23,42,0.32) !important; border-color:rgba(201,162,39,0.4) !important; }
+  .arp-post:hover .arp-readmore{ color:#C9A227 !important; }
+  @media (max-width:760px){
+    .arp-featured{ grid-template-columns:1fr !important; }
+    .arp-feat-panel{ min-height:150px !important; padding:24px !important; }
+  }
+</style>
+</helmet>
+
+<div style="font-family:'Inter',system-ui,sans-serif; color:#1E2937; background:#F8FAFC; overflow-x:hidden;">
+
+  <dc-import name="Header" active="blog" hint-size="100%,90px"></dc-import>
+
+  <section style="background:linear-gradient(160deg,#0F172A,#1E3A5F); color:#F8FAFC;">
+    <div style="max-width:900px; margin:0 auto; padding:clamp(48px,7vw,84px) clamp(18px,4vw,40px); text-align:center;">
+      <span style="font-size:12.5px; font-weight:600; letter-spacing:0.16em; text-transform:uppercase; color:#C9A227;">Knowledge &amp; guides</span>
+      <h1 style="font-family:'Spectral',serif; font-weight:600; font-size:clamp(32px,4.6vw,52px); line-height:1.1; letter-spacing:-0.015em; margin:16px 0 18px;">Investment claim guides &amp; insights</h1>
+      <p style="font-size:clamp(16px,2vw,19px); line-height:1.6; color:#c7d2e0; max-width:640px; margin:0 auto;">Clear, practical guidance on recovering money from mis-sold investments, pensions and scams — written for UK investors.</p>
+    </div>
+  </section>
+
+  <!-- LISTING -->
+  <sc-if value="{{ listing }}" hint-placeholder-val="{{ true }}">
+  <section style="background:#F8FAFC;">
+    <div style="max-width:1240px; margin:0 auto; padding:clamp(48px,6vw,80px) clamp(18px,4vw,40px);">
+
+      <!-- popular topics -->
+      <div data-reveal style="display:flex; flex-wrap:wrap; gap:10px; justify-content:center; margin-bottom:44px;">
+        <span style="font-size:13px; color:#94a3b8; align-self:center; margin-right:4px;">Popular topics:</span>
+        <sc-for list="{{ topics }}" as="t" hint-placeholder-count="6">
+          <span style="font-size:13px; font-weight:500; color:#1E3A5F; background:#fff; border:1px solid #e1e8f0; border-radius:100px; padding:8px 15px;">{{ t }}</span>
+        </sc-for>
+      </div>
+
+      <!-- featured -->
+      <div data-reveal class="arp-post arp-featured" onClick="{{ featured.onOpen }}" style="display:grid; grid-template-columns:1.1fr 1fr; gap:0; background:#fff; border:1px solid #e7edf4; border-radius:20px; overflow:hidden; margin-bottom:34px;">
+        <div class="arp-feat-panel" style="position:relative; min-height:300px; background:linear-gradient(155deg,#16263f,#0d1a2e); padding:34px; display:flex; flex-direction:column; justify-content:space-between;">
+          <span style="align-self:flex-start; font-size:11px; font-weight:600; letter-spacing:0.08em; text-transform:uppercase; color:#0F172A; background:#C9A227; padding:6px 12px; border-radius:100px;">Featured · {{ featured.category }}</span>
+          <div style="font-family:'Spectral',serif; font-size:120px; line-height:0.8; color:rgba(201,162,39,0.12); align-self:flex-end;">£</div>
+        </div>
+        <div style="padding:clamp(28px,3vw,42px); display:flex; flex-direction:column; justify-content:center;">
+          <div style="font-size:12.5px; color:#94a3b8; margin-bottom:12px;">{{ featured.read }} · Updated June 2026</div>
+          <h2 style="font-family:'Spectral',serif; font-size:clamp(22px,2.8vw,30px); font-weight:600; color:#0F172A; line-height:1.18; margin:0 0 14px;">{{ featured.title }}</h2>
+          <p style="font-size:15.5px; line-height:1.65; color:#64748B; margin:0 0 20px;">{{ featured.excerpt }}</p>
+          <span class="arp-readmore" style="font-size:14.5px; font-weight:600; color:#1E3A5F;">Read the full guide →</span>
+        </div>
+      </div>
+
+      <!-- grid -->
+      <div data-reveal style="display:grid; grid-template-columns:repeat(auto-fit,minmax(300px,1fr)); gap:22px;">
+        <sc-for list="{{ rest }}" as="a" hint-placeholder-count="9">
+          <div class="arp-post" onClick="{{ a.onOpen }}" style="display:flex; flex-direction:column; background:#fff; border:1px solid #e7edf4; border-radius:18px; overflow:hidden;">
+            <div style="height:8px; background:#C9A227;"></div>
+            <div style="padding:28px; display:flex; flex-direction:column; flex:1;">
+              <div style="display:flex; align-items:center; gap:10px; margin-bottom:14px;">
+                <span style="font-size:11px; font-weight:600; letter-spacing:0.06em; text-transform:uppercase; color:#1E3A5F; background:rgba(30,58,95,0.07); padding:5px 10px; border-radius:7px;">{{ a.category }}</span>
+                <span style="font-size:12px; color:#94a3b8;">{{ a.read }}</span>
+              </div>
+              <h3 style="font-family:'Spectral',serif; font-size:19.5px; font-weight:600; color:#0F172A; line-height:1.22; margin:0 0 11px;">{{ a.title }}</h3>
+              <p style="font-size:14.5px; line-height:1.6; color:#64748B; margin:0 0 18px; flex:1;">{{ a.excerpt }}</p>
+              <span class="arp-readmore" style="font-size:14px; font-weight:600; color:#1E3A5F;">Read more →</span>
+            </div>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+  </section>
+  </sc-if>
+
+  <!-- READER -->
+  <sc-if value="{{ reading }}" hint-placeholder-val="{{ false }}">
+  <section style="background:#fff;">
+    <article style="max-width:760px; margin:0 auto; padding:clamp(36px,5vw,64px) clamp(18px,4vw,40px);">
+      <button onClick="{{ closeArticle }}" style="display:inline-flex; align-items:center; gap:7px; background:transparent; border:none; cursor:pointer; color:#1E3A5F; font-family:'Inter',sans-serif; font-size:14px; font-weight:600; padding:0; margin-bottom:26px;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>All guides</button>
+
+      <div style="display:flex; align-items:center; gap:12px; margin-bottom:16px;">
+        <span style="font-size:11px; font-weight:600; letter-spacing:0.06em; text-transform:uppercase; color:#0F172A; background:#C9A227; padding:5px 11px; border-radius:7px;">{{ current.category }}</span>
+        <span style="font-size:13px; color:#94a3b8;">{{ current.read }} · Updated June 2026</span>
+      </div>
+      <h1 style="font-family:'Spectral',serif; font-size:clamp(28px,4vw,42px); font-weight:600; color:#0F172A; line-height:1.16; letter-spacing:-0.015em; margin:0 0 22px;">{{ current.title }}</h1>
+
+      <img src="assets/office.jpg" alt="Law firm office building" loading="lazy" style="display:block; width:100%; height:clamp(220px,32vw,340px); border:1px solid #e7edf4; margin-bottom:30px; object-fit:cover; object-position:center; border-radius:14px;" />
+
+      <p style="font-size:18px; line-height:1.6; color:#1E2937; font-weight:500; margin:0 0 22px;">{{ current.intro }}</p>
+
+      <sc-for list="{{ current.body }}" as="b" hint-placeholder-count="5">
+        <div style="{{ b.style }}">{{ b.text }}</div>
+      </sc-for>
+
+      <div style="margin:34px 0; padding:24px 26px; background:#F8FAFC; border:1px solid #e7edf4; border-left:3px solid #C9A227; border-radius:12px;">
+        <div style="font-size:12px; font-weight:600; letter-spacing:0.08em; text-transform:uppercase; color:#1E3A5F; margin-bottom:8px;">Key takeaway</div>
+        <div style="font-size:15.5px; line-height:1.65; color:#475569;">{{ current.takeaway }}</div>
+      </div>
+
+      <p style="font-size:12.5px; line-height:1.65; color:#94a3b8; margin:0 0 34px;">This article is general information, not legal advice. Investment Reclaim UK is a claims introduction service; claims are handled by SRA-regulated panel solicitors. Time limits apply and individual outcomes vary.</p>
+
+      <div style="background:linear-gradient(150deg,#0F172A,#1E3A5F); border-radius:16px; padding:clamp(26px,4vw,40px); text-align:center; color:#F8FAFC;">
+        <h3 style="font-family:'Spectral',serif; font-size:clamp(20px,2.6vw,26px); font-weight:600; margin:0 0 12px;">Think this applies to you?</h3>
+        <p style="font-size:15.5px; line-height:1.6; color:#c7d2e0; max-width:460px; margin:0 auto 24px;">Get a free, confidential assessment of your case — no obligation, with a response within 24 hours.</p>
+        <a class="arp-cta-primary" href="contact.dc.html" style="display:inline-block; background:#C9A227; color:#0F172A; padding:16px 30px; border-radius:11px; font-size:15.5px; font-weight:700;">Start Your Free Assessment →</a>
+      </div>
+    </article>
+  </section>
+  </sc-if>
+
+  <dc-import name="Footer" hint-size="100%,420px"></dc-import>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  state = { open: null };
+  componentDidMount() { this._reveal(); }
+  componentDidUpdate() { this._reveal(); }
+  _reveal() {
+    const reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const els = Array.from(document.querySelectorAll('[data-reveal]'));
+    if (reduce || !('IntersectionObserver' in window)) { els.forEach(el => { el.style.opacity = '1'; el.style.transform = 'none'; }); return; }
+    if (!this._io) { this._io = new IntersectionObserver((ents) => ents.forEach(e => { if (e.isIntersecting) { e.target.style.opacity = '1'; e.target.style.transform = 'none'; this._io.unobserve(e.target); } }), { threshold: 0.05, rootMargin: '0px 0px -40px 0px' }); }
+    els.forEach(el => { if (!el._obs) { el._obs = true; this._io.observe(el); } });
+  }
+  componentWillUnmount() { if (this._io) this._io.disconnect(); }
+
+  renderVals() {
+    const para = (t) => ({ text: t, style: { fontSize: '16.5px', lineHeight: '1.72', color: '#334155', margin: '0 0 20px' } });
+    const head = (t) => ({ text: t, style: { fontFamily: "'Spectral',serif", fontSize: '21px', fontWeight: 600, color: '#0F172A', margin: '30px 0 12px' } });
+
+    const articles = [
+      {
+        category: 'Pensions & SIPPs',
+        read: '6 min read',
+        title: 'How to Claim Back a Mis-Sold SIPP or Pension in 2026',
+        excerpt: 'Transferred a final-salary or workplace pension into a SIPP that lost value? Here is how mis-sold pension claims work, who is liable, and how to start.',
+        intro: 'If you were advised to move a secure pension into a Self-Invested Personal Pension (SIPP) holding high-risk or unregulated investments, you may be entitled to compensation — even if the adviser has since stopped trading.',
+        body: [
+          head('What counts as a mis-sold pension?'),
+          para('Mis-selling typically occurs when a financial adviser fails to properly investigate your circumstances, downplays the risks, or recommends transferring out of a safe occupational or final-salary scheme into a SIPP invested in speculative, illiquid assets. Many people were first contacted through a cold call or a "free pension review".'),
+          para('Common warning signs include unregulated underlying investments, unclear or compounding fees, pressure to act quickly, and projected returns that sounded too good to be true.'),
+          head('Who can a claim be made against?'),
+          para('Depending on the facts, a claim may lie against the financial adviser, the introducer, or the SIPP operator. Where the responsible firm is no longer trading, redress may be available through the Financial Services Compensation Scheme (FSCS) or the Financial Ombudsman Service (FOS).'),
+          head('How to start'),
+          para('The first step is a free assessment so a specialist can establish whether your transfer was suitable and which route — court, FOS or FSCS — offers the best prospects. Because strict time limits apply, it is best not to delay.')
+        ],
+        takeaway: 'If a secure pension was switched into a high-risk SIPP and lost value, you may have a claim — frequently on a No Win, No Fee basis, and often even if the adviser has closed.'
+      },
+      {
+        category: 'Cryptocurrency',
+        read: '5 min read',
+        title: 'Recovering Money From a Cryptocurrency Investment Scam in the UK',
+        excerpt: 'Lost crypto to a fake platform or "broker"? Recovery is often possible — through bank complaints, tracing and the Financial Ombudsman.',
+        intro: 'Crypto scams can feel hopeless because the money seems to vanish onto the blockchain. In practice, UK investors recover funds more often than they expect — frequently by pursuing the banks and payment providers that allowed the transfers.',
+        body: [
+          head('How crypto investment scams work'),
+          para('Victims are typically approached by a "broker" or an online contact, shown a convincing trading dashboard with impressive gains, and encouraged to deposit more — only to find withdrawals blocked or the platform gone. "Pig-butchering", cloned exchanges and fake trading apps are common variants.'),
+          head('Routes to recovery'),
+          para('Specialist solicitors combine blockchain tracing with claims against the banks involved, on the basis that they should have spotted and stopped suspicious payments. Where a bank failed in its duty, a complaint can be escalated to the Financial Ombudsman Service.'),
+          para('Speed matters: the sooner funds are traced and banks are put on notice, the stronger your prospects of recovery.')
+        ],
+        takeaway: 'Even when the scammer cannot be found, claims against banks and payment providers — backed by tracing — often recover crypto losses. Act quickly.'
+      },
+      {
+        category: 'Whiskey casks',
+        read: '4 min read',
+        title: 'Whiskey Cask Investment Gone Wrong? How to Get Your Money Back',
+        excerpt: 'Cask schemes promised steady, low-risk growth. If yours can\u2019t be verified or sold, you may have grounds for a compensation claim.',
+        intro: 'Whiskey cask and spirits schemes have been marketed heavily as a "safe" alternative investment. Many investors have since discovered their casks are overpriced, unverifiable, or impossible to sell on.',
+        body: [
+          head('Where cask schemes go wrong'),
+          para('Problems often involve casks that cannot be independently verified, mounting storage and insurance fees, inflated valuations, and exit values that never materialise. In some cases the same cask appears to have been sold to multiple investors.'),
+          head('Do you have a claim?'),
+          para('If you were given misleading information about the cask\u2019s value, liquidity or returns, or cannot now locate or sell what you bought, a specialist solicitor can review whether you were mis-sold and how to pursue recovery.')
+        ],
+        takeaway: 'If you cannot verify or sell your cask, or fees keep mounting, have the scheme reviewed — you may be owed compensation.'
+      },
+      {
+        category: 'Costs',
+        read: '4 min read',
+        title: 'No Win, No Fee Investment Claims Explained',
+        excerpt: 'What "No Win, No Fee" really means for investment and pension claims — and what you would actually pay if your claim succeeds.',
+        intro: 'No Win, No Fee makes pursuing a claim possible without risking more money. Here is how it works in practice for investment mis-selling and fraud-recovery cases.',
+        body: [
+          head('The basics'),
+          para('Under a No Win, No Fee (conditional fee) arrangement, you typically pay nothing upfront and nothing if your claim is unsuccessful. If it succeeds, the solicitor\u2019s fee is an agreed, capped percentage of what is recovered for you.'),
+          head('What to check'),
+          para('A reputable solicitor will set out all fees clearly and in writing before you commit, and there is usually a cooling-off period. You should never be asked for large upfront payments — be wary of anyone who does.')
+        ],
+        takeaway: 'No Win, No Fee means no upfront cost and nothing to pay if you lose. Always get the fee terms in writing before proceeding.'
+      },
+      {
+        category: 'Legal time limits',
+        read: '5 min read',
+        title: 'How Long Do You Have to Make an Investment Claim?',
+        excerpt: 'Time limits for mis-selling and fraud claims can be shorter than you think. Here is why acting early protects your right to compensation.',
+        intro: 'Most investment claims are subject to strict deadlines. Missing them can bar an otherwise strong case, so understanding the basics — and acting promptly — is essential.',
+        body: [
+          head('Why time limits matter'),
+          para('Limitation periods vary by claim type and can run from when you became aware (or ought reasonably to have become aware) of the problem. For ombudsman complaints, additional rules can apply. The detail is complex, which is exactly why an early assessment is valuable.'),
+          head('What to do now'),
+          para('Gather any paperwork — statements, brochures, emails and the adviser\u2019s details — and request a free assessment. A specialist can confirm the relevant deadline for your situation before it becomes an issue.')
+        ],
+        takeaway: 'Deadlines can pass quickly and vary by claim. The safest course is to have your case assessed as soon as possible.'
+      },
+      {
+        category: 'Fine art',
+        read: '4 min read',
+        title: 'Art Investment Scheme Losses: Can You Make a Claim?',
+        excerpt: 'Art "funds" and fractional ownership were sold on the promise of easy resale. If the value or the market wasn\u2019t there, you may be owed money.',
+        intro: 'Fine-art investment schemes are marketed as prestigious, low-risk stores of value. In reality, many were sold on inflated valuations and false promises of liquidity.',
+        body: [
+          head('Common problems'),
+          para('Investors were frequently told the artwork could be resold easily and at a profit. When the time came, the resale market — or the value itself — was simply not there, leaving holdings that are hard to value and harder to sell.'),
+          head('Assessing a claim'),
+          para('If the valuations, returns or liquidity you were promised did not reflect reality, a specialist can review whether the scheme was mis-sold or misrepresented and how to seek recovery.')
+        ],
+        takeaway: 'If an art scheme was sold on resale or valuation promises that never held up, it is worth having reviewed for a potential claim.'
+      },
+      {
+        category: 'Carbon & green',
+        read: '4 min read',
+        title: 'Carbon Credit & Green Energy Investments: Your Options If It Failed',
+        excerpt: 'Carbon credits sold to private investors are usually impossible to trade. Here is where you stand and what can be done.',
+        intro: 'Carbon credits and green-energy schemes were widely sold to private investors as the "next big thing". The FCA does not regulate carbon-credit sales, and many investors cannot sell what they bought.',
+        body: [
+          head('Why these schemes fail'),
+          para('Investors are often cold-called or pitched at seminars, then sold credits at heavily inflated prices with no real secondary market. Because the sector is largely unregulated and projects are usually overseas, recovery requires a careful, specialist approach.'),
+          head('Possible routes'),
+          para('Depending on how the scheme was sold and what was promised, claims may target the firms and individuals responsible, or the payment routes used. A free assessment is the best way to understand your options.')
+        ],
+        takeaway: 'If you were cold-sold carbon credits you now cannot trade, get the scheme and the sales process reviewed for a potential claim.'
+      },
+      {
+        category: 'Agriculture',
+        read: '4 min read',
+        title: 'Vertical Farming & Agriculture Schemes: How to Claim Compensation',
+        excerpt: 'Sustainable-farming projects promised green returns. When production never came, investors were left exposed — and may have a claim.',
+        intro: 'Vertical-farming, sustainable-agriculture and ethical-forestry schemes attracted investors with attractive "green" returns. In many cases the projects stalled and the promised yields never arrived.',
+        body: [
+          head('Where it goes wrong'),
+          para('Typical issues include projects that never reached production, updates and communications that dried up, and returns that bore no relation to what was projected at the point of sale.'),
+          head('Making a claim'),
+          para('If you were misled about the viability or returns of an agricultural scheme, a specialist solicitor can assess whether it was mis-sold and pursue recovery on your behalf.')
+        ],
+        takeaway: 'If a farming or forestry scheme stalled or never delivered the returns you were shown, your case is worth reviewing.'
+      },
+      {
+        category: 'Forex & CFD',
+        read: '5 min read',
+        title: 'Mis-Sold Forex & CFD Trading: Recovering Your Losses',
+        excerpt: 'Pressured to keep funding a trading account you couldn\u2019t withdraw from? Forex, CFD and binary-options losses can often be recovered.',
+        intro: 'High-pressure forex, CFD and binary-options platforms have cost UK investors heavily. Many of these firms were never properly authorised, and recovery is frequently possible.',
+        body: [
+          head('How these schemes operate'),
+          para('Investors are encouraged to deposit repeatedly, shown impressive "profits" they cannot actually withdraw, and pushed by aggressive "account managers". When withdrawal is finally attempted, it is blocked.'),
+          head('Recovery options'),
+          para('As with crypto fraud, claims often focus on the banks and card providers that processed the payments, supported by tracing and evidence of the platform\u2019s conduct. The Financial Ombudsman Service can be a route where a bank fell short.')
+        ],
+        takeaway: 'Forex and CFD losses on unregulated, high-pressure platforms can often be recovered via the banks involved. Get advice quickly.'
+      },
+      {
+        category: 'Land & property',
+        read: '4 min read',
+        title: 'Land Banking & Storage Pod Schemes: Are You Owed Compensation?',
+        excerpt: 'Land plots and storage pods sold on planning gains or guaranteed rent that never came. Here is how these claims work.',
+        intro: 'Land-banking, storage-pod and car-park schemes were sold on the promise of planning permission, development uplift or guaranteed rental income. Many investors are left with assets they cannot sell.',
+        body: [
+          head('The usual pattern'),
+          para('Buyers were promised that agricultural land would gain planning permission, or that a pod or parking space would generate reliable rental returns. In reality the permission never came and the rental income failed to materialise.'),
+          head('Your options'),
+          para('Where you were misled about planning prospects or guaranteed returns, a specialist can review the sale and advise on recovery — including against advisers or introducers involved.')
+        ],
+        takeaway: 'If land or a storage/parking scheme was sold on planning or rental promises that never held, it is worth a free review.'
+      }
+    ];
+
+    const decorate = (a, i) => Object.assign({}, a, { onOpen: () => { this.setState({ open: i }); try { window.scrollTo(0, 0); } catch (e) {} } });
+    const all = articles.map(decorate);
+    const open = this.state.open;
+    const reading = open !== null && open !== undefined;
+
+    return {
+      listing: !reading,
+      reading: reading,
+      featured: all[0],
+      rest: all.slice(1),
+      current: reading ? all[open] : all[0],
+      closeArticle: () => { this.setState({ open: null }); try { window.scrollTo(0, 0); } catch (e) {} },
+      topics: ['Mis-sold pension claims', 'Crypto scam recovery', 'Whiskey cask compensation', 'SIPP claims', 'Forex & CFD losses', 'No Win, No Fee']
+    };
+  }
+}
+</script>
+</body>
+</html>

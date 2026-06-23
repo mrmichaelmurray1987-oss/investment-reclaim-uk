@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Spectral:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  *{ box-sizing:border-box; }
+  html{ scroll-behavior:smooth; }
+  body{ margin:0; background:#F8FAFC; -webkit-font-smoothing:antialiased; }
+  @keyframes arpRise{from{transform:translateY(16px);}to{transform:translateY(0);}} [data-reveal]{ opacity:1; animation:arpRise .6s cubic-bezier(.2,.7,.2,1) both; }
+  a{ text-decoration:none; }
+  .arp-cta-primary{ transition:background .25s ease, color .25s ease, box-shadow .25s ease, transform .12s ease; }
+  .arp-cta-primary:hover{ background:#C9A227 !important; color:#0F172A !important; box-shadow:0 12px 34px -10px rgba(201,162,39,0.55) !important; }
+  .arp-card{ transition:transform .35s cubic-bezier(.2,.7,.2,1), box-shadow .35s ease, border-color .35s ease; }
+  .arp-card:hover{ transform:translateY(-6px); box-shadow:0 24px 50px -22px rgba(15,23,42,0.32) !important; border-color:rgba(201,162,39,0.4) !important; }
+  @media (max-width:920px){ .arp-split{ grid-template-columns:1fr !important; } }
+</style>
+</helmet>
+
+<div style="font-family:'Inter',system-ui,sans-serif; color:#1E2937; background:#F8FAFC; overflow-x:hidden;">
+
+  <dc-import name="Header" active="panel" hint-size="100%,90px"></dc-import>
+
+  <section style="background:linear-gradient(160deg,#0F172A,#1E3A5F); color:#F8FAFC;">
+    <div style="max-width:900px; margin:0 auto; padding:clamp(48px,7vw,84px) clamp(18px,4vw,40px); text-align:center;">
+      <span style="font-size:12.5px; font-weight:600; letter-spacing:0.16em; text-transform:uppercase; color:#C9A227;">Our legal panel</span>
+      <h1 style="font-family:'Spectral',serif; font-weight:600; font-size:clamp(32px,4.6vw,52px); line-height:1.1; letter-spacing:-0.015em; margin:16px 0 18px;">A curated panel of leading UK solicitors</h1>
+      <p style="font-size:clamp(16px,2vw,19px); line-height:1.6; color:#c7d2e0; max-width:660px; margin:0 auto;">We are not solicitors ourselves. We maintain a small, carefully vetted panel of specialist firms who have collectively recovered tens of millions of pounds — and we match every enquiry to the right firm for its circumstances.</p>
+    </div>
+  </section>
+
+  <!-- STATS -->
+  <section style="background:#0F172A;">
+    <div style="max-width:1100px; margin:0 auto; padding:0 clamp(18px,4vw,40px); transform:translateY(-36px);">
+      <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:1px; background:rgba(201,162,39,0.2); border:1px solid rgba(201,162,39,0.25); border-radius:16px; overflow:hidden; box-shadow:0 30px 70px -28px rgba(0,0,0,0.5);">
+        <div style="background:#13213a; padding:30px 22px; text-align:center;"><div style="font-family:'Spectral',serif; font-size:clamp(30px,4vw,42px); font-weight:600; color:#C9A227;">£40M+</div><div style="font-size:13.5px; color:#aebccd; margin-top:6px;">recovered for clients</div></div>
+        <div style="background:#13213a; padding:30px 22px; text-align:center;"><div style="font-family:'Spectral',serif; font-size:clamp(30px,4vw,42px); font-weight:600; color:#C9A227;">650+</div><div style="font-size:13.5px; color:#aebccd; margin-top:6px;">investors assisted</div></div>
+        <div style="background:#13213a; padding:30px 22px; text-align:center;"><div style="font-family:'Spectral',serif; font-size:clamp(30px,4vw,42px); font-weight:600; color:#C9A227;">30+</div><div style="font-size:13.5px; color:#aebccd; margin-top:6px;">years combined experience</div></div>
+        <div style="background:#13213a; padding:30px 22px; text-align:center;"><div style="font-family:'Spectral',serif; font-size:clamp(30px,4vw,42px); font-weight:600; color:#C9A227;">SRA</div><div style="font-size:13.5px; color:#aebccd; margin-top:6px;">regulated firms only</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- INTRO + IMAGE -->
+  <section style="background:#fff;">
+    <div class="arp-split" style="max-width:1180px; margin:0 auto; padding:clamp(40px,5vw,72px) clamp(18px,4vw,40px) clamp(56px,8vw,96px); display:grid; grid-template-columns:1fr 1fr; gap:clamp(36px,5vw,60px); align-items:center;">
+      <div data-reveal style="position:relative;">
+        <img src="assets/office.jpg" alt="Modern UK law firm office building" loading="lazy" style="display:block; width:100%; height:clamp(300px,40vw,440px); border:1px solid #e7edf4; box-shadow:0 30px 70px -28px rgba(15,23,42,0.4); object-fit:cover; object-position:center; border-radius:16px;" />
+        <div style="position:absolute; bottom:-22px; right:-12px;">
+          <img src="assets/handshake.png" alt="Solicitor and client shaking hands" loading="lazy" style="display:block; width:150px; height:120px; border:3px solid #fff; box-shadow:0 18px 40px -14px rgba(0,0,0,0.45); object-fit:cover; object-position:center; border-radius:12px;" />
+        </div>
+      </div>
+      <div data-reveal>
+        <span style="font-size:12.5px; font-weight:600; letter-spacing:0.16em; text-transform:uppercase; color:#C9A227;">How matching works</span>
+        <h2 style="font-family:'Spectral',serif; font-weight:600; font-size:clamp(26px,3.4vw,40px); line-height:1.16; letter-spacing:-0.015em; color:#0F172A; margin:16px 0 18px;">The right specialist for your specific case</h2>
+        <p style="font-size:16px; line-height:1.7; color:#475569; margin:0 0 16px;">No two investment claims are alike. A mis-sold SIPP turns on suitability and regulated-advice failings; a crypto fraud turns on tracing and the conduct of the banks involved. Our role is to understand your situation and introduce you to the firm best placed to win it.</p>
+        <p style="font-size:16px; line-height:1.7; color:#475569; margin:0;">Every firm on our panel is authorised and regulated by the Solicitors Regulation Authority, with a proven record in investment mis-selling and fraud recovery.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- STRENGTHS -->
+  <section style="background:#F8FAFC;">
+    <div style="max-width:1240px; margin:0 auto; padding:clamp(56px,8vw,96px) clamp(18px,4vw,40px);">
+      <div data-reveal style="text-align:center; max-width:640px; margin:0 auto 48px;">
+        <span style="font-size:12.5px; font-weight:600; letter-spacing:0.16em; text-transform:uppercase; color:#C9A227;">Panel strengths</span>
+        <h2 style="font-family:'Spectral',serif; font-weight:600; font-size:clamp(28px,3.8vw,44px); line-height:1.12; letter-spacing:-0.015em; color:#0F172A; margin:16px 0 0;">Depth of expertise across every claim type</h2>
+      </div>
+      <div data-reveal style="display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:22px;">
+        <div class="arp-card" style="background:#fff; border:1px solid #e7edf4; border-radius:16px; padding:30px;"><div style="width:46px; height:46px; border-radius:11px; background:rgba(201,162,39,0.1); display:flex; align-items:center; justify-content:center; margin-bottom:18px; color:#C9A227;"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18M5 21V7l8-4v18M19 21V11l-6-4"/></svg></div><h3 style="font-family:'Spectral',serif; font-size:20px; font-weight:600; color:#0F172A; margin:0 0 10px;">Financial mis-selling counsel</h3><p style="font-size:14.5px; line-height:1.65; color:#64748B; margin:0;">Specialists in suitability, disclosure and regulated-advice failings across pensions, SIPPs and alternative-investment products.</p></div>
+        <div class="arp-card" style="background:#fff; border:1px solid #e7edf4; border-radius:16px; padding:30px;"><div style="width:46px; height:46px; border-radius:11px; background:rgba(201,162,39,0.1); display:flex; align-items:center; justify-content:center; margin-bottom:18px; color:#C9A227;"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg></div><h3 style="font-family:'Spectral',serif; font-size:20px; font-weight:600; color:#0F172A; margin:0 0 10px;">Group &amp; individual actions</h3><p style="font-size:14.5px; line-height:1.65; color:#64748B; margin:0;">Experience running both multi-claimant group actions and discreet, standalone individual claims — whichever suits you best.</p></div>
+        <div class="arp-card" style="background:#fff; border:1px solid #e7edf4; border-radius:16px; padding:30px;"><div style="width:46px; height:46px; border-radius:11px; background:rgba(201,162,39,0.1); display:flex; align-items:center; justify-content:center; margin-bottom:18px; color:#C9A227;"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></svg></div><h3 style="font-family:'Spectral',serif; font-size:20px; font-weight:600; color:#0F172A; margin:0 0 10px;">Fraud &amp; asset recovery</h3><p style="font-size:14.5px; line-height:1.65; color:#64748B; margin:0;">Robust recovery strategies, including blockchain tracing, freezing applications, bank complaints and cross-border enforcement.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section style="background:#0F172A; position:relative; overflow:hidden;">
+    <div style="position:absolute; inset:0; background-image:radial-gradient(circle at 50% 120%, rgba(201,162,39,0.18), transparent 55%); pointer-events:none;"></div>
+    <div data-reveal style="position:relative; max-width:760px; margin:0 auto; padding:clamp(56px,8vw,96px) clamp(18px,4vw,40px); text-align:center; color:#F8FAFC;">
+      <h2 style="font-family:'Spectral',serif; font-weight:600; font-size:clamp(28px,4vw,44px); line-height:1.12; letter-spacing:-0.02em; margin:0 0 20px;">Let us match you to the right solicitor</h2>
+      <p style="font-size:clamp(16px,2vw,19px); line-height:1.6; color:#c7d2e0; max-width:560px; margin:0 auto 32px;">Start with a free, confidential assessment — and we'll do the rest.</p>
+      <a class="arp-cta-primary" href="contact.dc.html" style="display:inline-block; background:#C9A227; color:#0F172A; padding:18px 34px; border-radius:11px; font-size:17px; font-weight:700;">Start Your Free Assessment →</a>
+    </div>
+  </section>
+
+  <dc-import name="Footer" hint-size="100%,420px"></dc-import>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  componentDidMount() { this._reveal(); }
+  componentDidUpdate() { this._reveal(); }
+  _reveal() {
+    const reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const els = Array.from(document.querySelectorAll('[data-reveal]'));
+    if (reduce || !('IntersectionObserver' in window)) { els.forEach(el => { el.style.opacity = '1'; el.style.transform = 'none'; }); return; }
+    if (!this._io) { this._io = new IntersectionObserver((ents) => ents.forEach(e => { if (e.isIntersecting) { e.target.style.opacity = '1'; e.target.style.transform = 'none'; this._io.unobserve(e.target); } }), { threshold: 0.1, rootMargin: '0px 0px -50px 0px' }); }
+    els.forEach(el => { if (!el._obs) { el._obs = true; this._io.observe(el); } });
+  }
+  componentWillUnmount() { if (this._io) this._io.disconnect(); }
+  renderVals() { return {}; }
+}
+</script>
+</body>
+</html>

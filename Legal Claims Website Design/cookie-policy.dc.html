@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Spectral:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  *{ box-sizing:border-box; }
+  html{ scroll-behavior:smooth; }
+  body{ margin:0; background:#F8FAFC; -webkit-font-smoothing:antialiased; }
+  a{ text-decoration:none; }
+  .arp-prose h2{ font-family:'Spectral',serif; font-weight:600; font-size:clamp(21px,2.6vw,27px); color:#0F172A; line-height:1.25; margin:42px 0 14px; letter-spacing:-0.01em; }
+  .arp-prose p{ font-size:16px; line-height:1.75; color:#334155; margin:0 0 16px; }
+  .arp-prose li{ font-size:16px; line-height:1.7; color:#334155; margin:0 0 9px; }
+  .arp-prose ul{ margin:0 0 18px; padding-left:22px; }
+  .arp-prose a{ color:#1E3A5F; text-decoration:underline; }
+  .arp-prose strong{ color:#1E2937; }
+  .arp-ck-table{ width:100%; border-collapse:collapse; margin:6px 0 22px; font-size:14.5px; }
+  .arp-ck-table th{ text-align:left; padding:12px 14px; background:#0F172A; color:#F8FAFC; font-weight:600; font-size:12.5px; letter-spacing:0.04em; text-transform:uppercase; }
+  .arp-ck-table th:first-child{ border-radius:10px 0 0 0; }
+  .arp-ck-table th:last-child{ border-radius:0 10px 0 0; }
+  .arp-ck-table td{ padding:13px 14px; border-bottom:1px solid #e7edf4; color:#475569; line-height:1.55; vertical-align:top; }
+  .arp-ck-table tr:nth-child(even) td{ background:#F8FAFC; }
+</style>
+</helmet>
+
+<div style="font-family:'Inter',system-ui,sans-serif; color:#1E2937; background:#F8FAFC; overflow-x:hidden;">
+
+  <dc-import name="Header" active="" hint-size="100%,90px"></dc-import>
+
+  <section style="background:linear-gradient(160deg,#0F172A,#1E3A5F); color:#F8FAFC;">
+    <div style="max-width:820px; margin:0 auto; padding:clamp(44px,6vw,76px) clamp(18px,4vw,40px);">
+      <span style="font-size:12.5px; font-weight:600; letter-spacing:0.16em; text-transform:uppercase; color:#C9A227;">Legal &amp; compliance</span>
+      <h1 style="font-family:'Spectral',serif; font-weight:600; font-size:clamp(30px,4.4vw,46px); line-height:1.12; letter-spacing:-0.015em; margin:14px 0 14px;">Cookie Policy</h1>
+      <p style="font-size:16px; line-height:1.6; color:#c7d2e0; margin:0;">How and why we use cookies on this website, and how you can control them. Last updated: June 2026.</p>
+    </div>
+  </section>
+
+  <section style="background:#fff;">
+    <div class="arp-prose" style="max-width:820px; margin:0 auto; padding:clamp(40px,6vw,72px) clamp(18px,4vw,40px);">
+
+      <h2>1. What are cookies?</h2>
+      <p>Cookies are small text files placed on your device when you visit a website. They help the site function, remember your preferences, and provide information to the site owner. Similar technologies such as pixels and local storage are covered by this policy too.</p>
+
+      <h2>2. How we use cookies</h2>
+      <p>We use a small number of cookies to operate this site securely and, only with your consent, to understand how visitors use it so we can improve it. When you first visit, our cookie banner lets you <strong>accept all cookies</strong> or <strong>reject non-essential cookies</strong>. Essential cookies are always active because the site cannot work properly without them.</p>
+
+      <h2>3. The cookies we use</h2>
+      <div style="overflow-x:auto; -webkit-overflow-scrolling:touch; margin-bottom:6px;">
+      <table class="arp-ck-table" style="min-width:520px;">
+        <thead><tr><th>Cookie</th><th>Type</th><th>Purpose</th><th>Retention</th></tr></thead>
+        <tbody>
+          <tr><td>arp-cookie-consent</td><td>Essential</td><td>Remembers your cookie choice so we don't ask again.</td><td>12 months</td></tr>
+          <tr><td>Session / security</td><td>Essential</td><td>Keeps the site secure and functioning during your visit.</td><td>Session</td></tr>
+          <tr><td>Analytics (e.g. Google Analytics)</td><td>Optional</td><td>Helps us understand how the site is used, in aggregate. Set only if you accept.</td><td>Up to 24 months</td></tr>
+          <tr><td>Marketing / advertising</td><td>Optional</td><td>Measures the effectiveness of our campaigns. Set only if you accept.</td><td>Up to 12 months</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <p style="font-size:13.5px; color:#94a3b8;">This table is a template — confirm the exact cookies in use with your developer and analytics provider before going live.</p>
+
+      <h2>4. Managing your preferences</h2>
+      <p>You can change your choice at any time by selecting <strong>"Cookie Preferences"</strong> in the footer of any page, which reopens the consent banner. You can also block or delete cookies through your browser settings, although some essential features may then not work as intended.</p>
+
+      <h2>5. Consent</h2>
+      <p>We only set optional (analytics and marketing) cookies where you have given consent via our banner. Rejecting non-essential cookies will not affect your ability to use the site or to request a free assessment.</p>
+
+      <h2>6. Changes to this policy</h2>
+      <p>We may update this Cookie Policy from time to time. Any changes will be posted on this page with an updated revision date. For more on how we handle personal data, please see our <a href="privacy-policy.dc.html">Privacy Policy</a>.</p>
+    </div>
+  </section>
+
+  <dc-import name="Footer" hint-size="100%,460px"></dc-import>
+
+</div>
+</x-dc>
+</body>
+</html>
