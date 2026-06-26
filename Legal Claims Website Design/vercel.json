@@ -1,6 +1,7 @@
 {
   "cleanUrls": false,
   "rewrites": [
-    { "source": "/", "destination": "/index.dc.html" }
+    { "source": "/", "destination": "/index.dc.html" },
+    { "source": "/claim", "destination": "/claim-check.dc.html" }
   ]
 }

@@ -84,11 +84,6 @@
     </div>
 
     <label style="display:flex; flex-direction:column; gap:7px;">
-      <span style="font-size:12px; font-weight:600; letter-spacing:0.04em; text-transform:uppercase; color:#1E3A5F;">Memorable word / reference <span style="font-weight:400; text-transform:none; letter-spacing:0; color:#94a3b8;">(optional)</span></span>
-      <input type="text" name="reference" placeholder="A word only you would recognise" style="width:100%; box-sizing:border-box; padding:13px 15px; border:1px solid #d8dee8; border-radius:9px; font-family:'Inter',sans-serif; font-size:16px; color:#1E2937; background:#fff;" />
-    </label>
-
-    <label style="display:flex; flex-direction:column; gap:7px;">
       <span style="font-size:12px; font-weight:600; letter-spacing:0.04em; text-transform:uppercase; color:#1E3A5F;">Briefly, what happened?</span>
       <textarea name="description" rows="3" placeholder="A few lines about the investment and your concerns. No detail is too small." style="width:100%; box-sizing:border-box; padding:13px 15px; border:1px solid #d8dee8; border-radius:9px; font-family:'Inter',sans-serif; font-size:16px; line-height:1.5; color:#1E2937; background:#fff; resize:vertical;"></textarea>
     </label>
@@ -138,14 +133,14 @@ class Component extends DCLogic {
         const payload = {
           name: g('name'), email: g('email'), phone: g('phone'),
           amount: g('amount'), scheme: g('scheme'), year: g('year'),
-          reference: g('reference'), description: g('description')
+          description: g('description')
         };
         const mailtoFallback = () => {
           const body = [
             'New free claim assessment enquiry — Investment Reclaim UK', '',
             'Name: ' + payload.name, 'Email: ' + payload.email, 'Phone: ' + payload.phone,
             'Approx. amount invested / lost: ' + payload.amount, 'Scheme / company: ' + payload.scheme,
-            'Approx. year of investment: ' + payload.year, 'Memorable word / reference: ' + payload.reference,
+            'Approx. year of investment: ' + payload.year,
             '', 'What happened:', payload.description
           ].join('\n');
           try { window.location.href = 'mailto:info@investmentreclaimuk.co.uk?subject=' + encodeURIComponent('Free Claim Assessment — ' + (payload.name || 'New enquiry')) + '&body=' + encodeURIComponent(body); } catch (err) {}
