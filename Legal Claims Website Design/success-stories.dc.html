@@ -48,17 +48,10 @@
   <section style="background:#fff;">
     <div style="max-width:1240px; margin:0 auto; padding:clamp(40px,5vw,64px) clamp(18px,4vw,40px) clamp(56px,8vw,96px);">
       <div data-reveal style="columns:3 320px; column-gap:22px;">
-        <sc-for list="{{ testimonials }}" as="t" hint-placeholder-count="10">
-          <div class="arp-card" style="break-inside:avoid; margin-bottom:22px; background:#F8FAFC; border:1px solid #e7edf4; border-radius:16px; padding:28px; display:inline-block; width:100%;">
-            <div style="display:flex; gap:2px; color:#C9A227; font-size:15px; letter-spacing:1px; margin-bottom:14px;">★★★★★</div>
-            <p style="font-family:'Spectral',serif; font-size:16.5px; line-height:1.62; color:#1E2937; margin:0 0 22px;">"{{ t.quote }}"</p>
-            <div style="display:flex; align-items:center; gap:13px; padding-top:18px; border-top:1px solid #e7edf4;">
-              <div style="width:44px; height:44px; border-radius:50%; background:#1E3A5F; color:#F8FAFC; display:flex; align-items:center; justify-content:center; font-family:'Spectral',serif; font-weight:600; font-size:15px; flex:none;">{{ t.initials }}</div>
-              <div style="flex:1;"><div style="font-size:14.5px; font-weight:600; color:#0F172A;">{{ t.name }}</div><div style="font-size:13px; color:#64748B;">{{ t.meta }}</div></div>
-              <div style="font-size:12px; font-weight:600; color:#1E8A5B; background:rgba(30,138,91,0.1); padding:5px 10px; border-radius:7px; white-space:nowrap;">{{ t.outcome }}</div>
-            </div>
-          </div>
-        </sc-for>
+        <div style="max-width:640px; margin:0 auto; text-align:center; background:#fff; border:1px solid #e7edf4; border-radius:16px; padding:40px 32px;">
+          <p style="font-family:'Spectral',serif; font-size:18px; line-height:1.65; color:#1E2937; margin:0;">We only publish real client stories, shared with written permission — and as a newer service we don't have those to show yet. What we can show you is exactly how the process works, step by step.</p>
+          <a href="how-it-works.dc.html" style="display:inline-block; margin-top:24px; background:#C9A227; color:#0F172A; padding:14px 28px; border-radius:11px; font-size:15px; font-weight:700; text-decoration:none;">See how it works →</a>
+        </div>
       </div>
       <p style="text-align:center; font-size:12.5px; color:#94a3b8; margin:18px auto 0; max-width:680px;">Illustrative client experiences. Individual outcomes vary and depend on the specific circumstances of each case. Past results do not guarantee future success.</p>
     </div>
@@ -90,20 +83,7 @@ class Component extends DCLogic {
   }
   componentWillUnmount() { if (this._io) this._io.disconnect(); }
   renderVals() {
-    const testimonials = [
-      { initials: 'J.M.', name: 'James M.', meta: 'Surrey · Fine art portfolio', outcome: 'Recovered majority', quote: 'The process was handled with complete discretion and genuine expertise. I had almost written the money off — their panel solicitor recovered the majority of my investment.' },
-      { initials: 'B.K.', name: 'Brian K.', meta: 'Newcastle · Mis-sold SIPP', outcome: 'Pension restored', quote: 'I was advised to move my final-salary pension into a SIPP full of unregulated investments. Their solicitor recovered what I had lost — I can retire as planned.' },
-      { initials: 'S.A.', name: 'Sana A.', meta: 'Manchester · Crypto platform', outcome: 'Funds traced', quote: 'A "broker" talked me into a crypto platform that vanished overnight. I assumed the money was gone. The team traced it and pursued recovery with real professionalism.' },
-      { initials: 'RT', name: 'R. & S. T.', meta: 'Cheshire · Whiskey casks', outcome: 'Settled in full', quote: 'We felt embarrassed to have been caught out. There was no judgement here — just calm, professional people who knew exactly what to do.' },
-      { initials: 'D.H.', name: 'Dr D. H.', meta: 'Edinburgh · Vertical farming', outcome: 'Significant settlement', quote: 'They matched me with a solicitor who specialised in precisely this type of agricultural scheme. The difference that made was enormous.' },
-      { initials: 'A.P.', name: 'Angela P.', meta: 'London · Mixed portfolio', outcome: 'Claim succeeded', quote: 'Regular, clear updates throughout. At no point was I left wondering what was happening with my case. Premium service from start to finish.' },
-      { initials: 'M.C.', name: 'Martin C.', meta: 'Bristol · Carbon credits', outcome: 'Recovered funds', quote: 'I am a fairly experienced investor, so being mis-sold stung. The team were respectful of that and got me to the right people quickly.' },
-      { initials: 'L.W.', name: 'Lorraine W.', meta: 'Leeds · Whiskey casks', outcome: 'No win, no fee', quote: 'The No Win, No Fee arrangement meant I could pursue the claim without risking more money. That reassurance was everything.' },
-      { initials: 'G.R.', name: 'Geoffrey R.', meta: 'Kent · Fine art fund', outcome: 'Substantial recovery', quote: 'Discreet, measured and never pushy. It felt like dealing with a private office rather than a claims company.' },
-      { initials: 'PN', name: 'P. & E. N.', meta: 'Glasgow · Agriculture scheme', outcome: 'Settled', quote: 'After two years of silence from the scheme, having someone competent and calm take charge was an enormous relief.' },
-      { initials: 'F.D.', name: 'Farah D.', meta: 'Birmingham · Forex platform', outcome: 'Refund secured', quote: 'I had been pressured into topping up a trading account again and again. They challenged my bank and secured a refund I never expected to see.' },
-      { initials: 'C.W.', name: 'Colin W.', meta: 'Cardiff · Land banking', outcome: 'Compensation', quote: 'The plot I bought never got planning permission. They pointed me to a solicitor who understood land-banking cases inside out.' }
-    ];
+    const testimonials = [];  // Real, consented client stories only — none yet. Fabricated placeholders removed 2026-08-20.
     return { testimonials };
   }
 }

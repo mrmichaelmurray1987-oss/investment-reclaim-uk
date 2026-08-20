@@ -108,7 +108,7 @@
       <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#C9A227" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
     </div>
     <h3 style="font-family:'Spectral',Georgia,serif; font-weight:600; font-size:26px; color:#0F172A; margin:0 0 12px;">Thank you — your request is received.</h3>
-    <p style="font-size:16px; line-height:1.65; color:#64748B; max-width:440px; margin:0 auto 22px;">A member of our assessment team will review your enquiry in confidence and contact you within <strong style="color:#1E2937;">24 hours</strong>. If your case is suitable, we will introduce you to the right specialist solicitor from our panel — with no obligation.</p>
+    <p style="font-size:16px; line-height:1.65; color:#64748B; max-width:440px; margin:0 auto 22px;">A member of the claims team will review your enquiry in confidence and contact you within <strong style="color:#1E2937;">24 hours</strong>. If your case is suitable, we will introduce you to the right specialist solicitor from our panel — with no obligation.</p>
     <div style="display:inline-flex; flex-direction:column; gap:10px; text-align:left; background:#F8FAFC; border:1px solid #e7edf4; border-radius:12px; padding:18px 22px; max-width:380px;">
       <span style="font-size:12px; font-weight:600; letter-spacing:0.06em; text-transform:uppercase; color:#1E3A5F;">What happens next</span>
       <span style="font-size:14.5px; line-height:1.6; color:#475569;">1. Confidential review of your enquiry<br/>2. A short, no-pressure call to confirm details<br/>3. Introduction to your matched solicitor</span>
@@ -137,13 +137,13 @@ class Component extends DCLogic {
         };
         const mailtoFallback = () => {
           const body = [
-            'New free claim assessment enquiry — Investment Reclaim UK', '',
+            'New eligibility-check enquiry — Investment Reclaim UK', '',
             'Name: ' + payload.name, 'Email: ' + payload.email, 'Phone: ' + payload.phone,
             'Approx. amount invested / lost: ' + payload.amount, 'Scheme / company: ' + payload.scheme,
             'Approx. year of investment: ' + payload.year,
             '', 'What happened:', payload.description
           ].join('\n');
-          try { window.location.href = 'mailto:info@investmentreclaimuk.co.uk?subject=' + encodeURIComponent('Free Claim Assessment — ' + (payload.name || 'New enquiry')) + '&body=' + encodeURIComponent(body); } catch (err) {}
+          try { window.location.href = 'mailto:info@investmentreclaimuk.co.uk?subject=' + encodeURIComponent('Eligibility Check — ' + (payload.name || 'New enquiry')) + '&body=' + encodeURIComponent(body); } catch (err) {}
         };
         // Try the Resend-backed serverless endpoint first; fall back to mailto.
         fetch('/api/send', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) })
