@@ -118,7 +118,6 @@ module.exports = async function handler(req, res) {
           <p style="margin:0 0 14px;">Hi ${firstName || 'there'},</p>
           <p style="margin:0 0 14px;">Thank you — we've received your free claim check and a specialist from our panel will review it and be in touch <strong>within 24 hours</strong>.</p>
           <p style="margin:0 0 14px;">Everything you've shared is kept strictly confidential, and there's no obligation to proceed.</p>
-          <p style="margin:0 0 14px;">If it's urgent, you can call us on <strong>0800 470 0000</strong> (Mon–Fri, 9am–6pm).</p>
           <p style="margin:18px 0 0;">Kind regards,<br>The team at Investment Reclaim UK</p>
         </div>
         <div style="background:#0F172A;padding:16px 24px;font-size:11px;color:#94a3b8;line-height:1.6;">
@@ -130,7 +129,7 @@ module.exports = async function handler(req, res) {
       to: [email],
       subject: 'We’ve received your free claim check',
       html: replyHtml,
-      text: `Hi ${firstName || 'there'},\n\nThank you — we've received your free claim check and a specialist will be in touch within 24 hours. Everything is kept strictly confidential, with no obligation.\n\nIf it's urgent, call us on 0800 470 0000 (Mon–Fri, 9am–6pm).\n\nKind regards,\nInvestment Reclaim UK`
+      text: `Hi ${firstName || 'there'},\n\nThank you — we've received your free claim check and a specialist will be in touch within 24 hours. Everything is kept strictly confidential, with no obligation.\n\nKind regards,\nInvestment Reclaim UK`
     }).catch(() => {}));
   }
 
