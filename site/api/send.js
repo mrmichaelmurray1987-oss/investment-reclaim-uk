@@ -1,5 +1,15 @@
 // Vercel Serverless Function — receives the Free Claim Assessment form.
-// It does four things (the form still succeeds even if the extras fail):
+//
+// CONSENT: the request is REJECTED with 422 unless `consent` is true. The form's
+// `required` checkbox is browser-side only and proves nothing, so the gate lives
+// here. Every accepted enquiry carries a consent record — the exact wording that
+// was displayed (captured from the DOM by the form, not retyped here, so it
+// cannot drift), the browser timestamp, the server timestamp, the IP and the
+// user-agent. That record goes into the internal notification email and onto the
+// Brevo contact. Do not remove it: it is what evidences consent to a panel
+// solicitor or to the ICO.
+//
+// Beyond that it does four things (the form still succeeds even if the extras fail):
 //   1. Emails the lead to info@investmentreclaimuk.co.uk (via Resend)        [required]
 //   2. Sends the lead an instant branded auto-reply (via Resend)             [best-effort]
 //   3. Creates/updates a Brevo contact + adds to the "Website Leads" list    [best-effort]
@@ -44,6 +54,37 @@ module.exports = async function handler(req, res) {
     return res.status(400).json({ error: 'Empty submission.' });
   }
 
+  // ---- Consent gate + consent record ----
+  // The checkbox is marked `required` in the form, but that is browser-side only.
+  // No consent, no enquiry: we must never pass a lead to a solicitor without a
+  // recorded consent, and we must be able to evidence it later.
+  const consentGiven = data.consent === true || data.consent === 'true' || data.consent === 'on' || data.consent === 1;
+  if (!consentGiven) {
+    return res.status(422).json({ error: 'Consent is required before an enquiry can be submitted.' });
+  }
+
+  // Wording is captured from the DOM by the form, so it is the text actually shown.
+  const consentText = clean(data.consentText) || '(wording not captured — investigate)';
+  const consentPage = clean(data.consentPage) || 'Not provided';
+  const consentTickedAt = clean(data.consentTimestamp) || 'Not provided';
+  // Server-side facts the browser cannot forge, for the audit trail.
+  const receivedAt = new Date().toISOString();
+  const consentIp = clean(
+    (req.headers['x-forwarded-for'] || '').split(',')[0].trim() ||
+    req.headers['x-real-ip'] || ''
+  ) || 'Not recorded';
+  const consentUserAgent = clean(req.headers['user-agent']) || 'Not recorded';
+
+  const consentRows = [
+    ['Consent given', 'YES'],
+    ['Ticked at (browser clock)', consentTickedAt],
+    ['Received at (server, authoritative)', receivedAt],
+    ['Submitted from page', consentPage],
+    ['IP address', consentIp],
+    ['Browser / device', consentUserAgent],
+    ['Exact wording shown', consentText]
+  ];
+
   const hasEmail = /^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email);
   const nameParts = (name === 'Not provided' ? '' : name).split(' ').filter(Boolean);
   const firstName = nameParts[0] || '';
@@ -76,10 +117,20 @@ module.exports = async function handler(req, res) {
       </table>
       <p style="margin:18px 0 6px;font-weight:600;color:#1E3A5F;">What happened</p>
       <p style="white-space:pre-wrap;line-height:1.6;color:#334155;font-size:14px;margin:0;">${description}</p>
+      <p style="margin:24px 0 6px;font-weight:600;color:#1E3A5F;">Consent record</p>
+      <p style="color:#64748B;margin:0 0 10px;font-size:12px;">Keep this. It is the evidence that consent was given, and what was shown when it was.</p>
+      <table style="width:100%;border-collapse:collapse;font-size:13px;">
+        ${consentRows.map(([k, v]) => `<tr>
+          <td style="padding:7px 12px;background:#F1F5F9;color:#334155;font-weight:600;width:42%;vertical-align:top;">${k}</td>
+          <td style="padding:7px 12px;border-bottom:1px solid #e7edf4;color:#334155;word-break:break-word;">${v}</td>
+        </tr>`).join('')}
+      </table>
     </div>`;
   const internalText = [
     'New Free Claim Assessment (investmentreclaimuk.co.uk)', '',
-    ...rows.map(([k, v]) => `${k}: ${v}`), '', 'What happened:', description
+    ...rows.map(([k, v]) => `${k}: ${v}`), '', 'What happened:', description,
+    '', '--- Consent record (keep this) ---',
+    ...consentRows.map(([k, v]) => `${k}: ${v}`)
   ].join('\n');
 
   const sendResend = (payload) => fetch('https://api.resend.com/emails', {
@@ -146,7 +197,15 @@ module.exports = async function handler(req, res) {
         FIRSTNAME: firstName, LASTNAME: lastName,
         PHONE: phone !== 'Not provided' ? phone : undefined,
         SCHEME: scheme, AMOUNT_LOST: amount, YEAR_INVESTED: year,
-        LEAD_SOURCE: 'Website /claim'
+        LEAD_SOURCE: 'Website /claim',
+        // Consent audit trail. These attributes must exist in Brevo (Contacts →
+        // Settings → Contact attributes) or Brevo silently drops them.
+        CONSENT_GIVEN: 'YES',
+        CONSENT_AT: receivedAt,
+        CONSENT_TICKED_AT: consentTickedAt,
+        CONSENT_IP: consentIp,
+        CONSENT_PAGE: consentPage,
+        CONSENT_TEXT: consentText
       },
       listIds: [LEADS_LIST],
       updateEnabled: true

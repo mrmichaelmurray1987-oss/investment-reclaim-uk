@@ -90,7 +90,7 @@
 
     <label style="display:flex; gap:11px; align-items:flex-start; cursor:pointer;">
       <input type="checkbox" name="consent" required style="margin-top:3px; width:17px; height:17px; accent-color:#1E3A5F; flex:none;" />
-      <span style="font-size:13px; line-height:1.55; color:#64748B;">I consent to Investment Reclaim UK reviewing my enquiry and, where appropriate, introducing me to a regulated solicitor from its panel. I have read the <a href="#footer" style="color:#1E3A5F; text-decoration:underline;">privacy notice</a>.</span>
+      <span data-consent-text style="font-size:13px; line-height:1.55; color:#64748B;">I consent to Investment Reclaim UK reviewing my enquiry and, where appropriate, introducing me to a regulated solicitor from its panel. I have read the <a href="#footer" style="color:#1E3A5F; text-decoration:underline;">privacy notice</a>.</span>
     </label>
 
     <button type="submit" class="arp-submit" style="width:100%; padding:17px 24px; border:none; border-radius:10px; background:#0F172A; color:#F8FAFC; font-family:'Inter',sans-serif; font-size:16px; font-weight:600; letter-spacing:0.01em; cursor:pointer;">Request My Free Assessment →</button>
@@ -130,10 +130,21 @@ class Component extends DCLogic {
         const form = e.target;
         const fd = new FormData(form);
         const g = (k) => (fd.get(k) || '').toString().trim();
+        // Read the consent wording straight out of the DOM rather than repeating it
+        // here, so the text we record is provably the text the person was shown.
+        let consentText = '';
+        try {
+          const el = form.querySelector('[data-consent-text]');
+          if (el) consentText = (el.innerText || el.textContent || '').replace(/\s+/g, ' ').trim();
+        } catch (err) {}
         const payload = {
           name: g('name'), email: g('email'), phone: g('phone'),
           amount: g('amount'), scheme: g('scheme'), year: g('year'),
-          description: g('description')
+          description: g('description'),
+          consent: fd.get('consent') ? true : false,
+          consentText: consentText,
+          consentTimestamp: new Date().toISOString(),
+          consentPage: (function () { try { return window.location.href; } catch (err) { return ''; } })()
         };
         const mailtoFallback = () => {
           const body = [
@@ -141,7 +152,12 @@ class Component extends DCLogic {
             'Name: ' + payload.name, 'Email: ' + payload.email, 'Phone: ' + payload.phone,
             'Approx. amount invested / lost: ' + payload.amount, 'Scheme / company: ' + payload.scheme,
             'Approx. year of investment: ' + payload.year,
-            '', 'What happened:', payload.description
+            '', 'What happened:', payload.description,
+            '', '--- Consent record ---',
+            'Consent given: ' + (payload.consent ? 'YES' : 'NO'),
+            'Ticked at (browser): ' + payload.consentTimestamp,
+            'Page: ' + payload.consentPage,
+            'Wording shown: ' + payload.consentText
           ].join('\n');
           try { window.location.href = 'mailto:info@investmentreclaimuk.co.uk?subject=' + encodeURIComponent('Eligibility Check — ' + (payload.name || 'New enquiry')) + '&body=' + encodeURIComponent(body); } catch (err) {}
         };
