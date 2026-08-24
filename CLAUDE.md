@@ -6,12 +6,12 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 Marketing/lead-generation website for **Investment Reclaim UK** — a service connecting people who lost money in investment schemes or mis-sold pensions with a panel of solicitors. It is a **static site plus one serverless function**, deployed on Vercel. There is no build step, no package.json, and no test suite — you edit HTML files directly.
 
-All site code lives in **`Legal Claims Website Design/`** (note the spaces in the path). Run Vercel commands from inside that folder.
+All site code lives in **`site/`** (no spaces — Vercel serverless functions reject paths containing spaces). Run Vercel commands from inside that folder.
 
 ## Commands
 
 ```bash
-cd "Legal Claims Website Design"
+cd site
 
 vercel dev      # Run locally — serves static pages AND the /api/send function
 vercel          # Deploy a preview
@@ -33,7 +33,7 @@ Pages are **`.dc.html` files** rendered **client-side as React** by `support.js`
 
 Reusable pieces are imported with `<dc-import name="Header">`, which fetches `Header.dc.html` from the **same directory** (`COMPONENT_DIR` is `"."`). The three shared components are **`Header`**, **`Footer`**, and **`AssessmentForm`**.
 
-> Because component names resolve to `./<Name>.dc.html`, **all `.dc.html` files must stay flat in `Legal Claims Website Design/`** — do not move them into subfolders.
+> Because component names resolve to `./<Name>.dc.html`, **all `.dc.html` files must stay flat in `site/`** — do not move them into subfolders.
 
 Pages: `index`, `claims`, `how-it-works`, `faq`, `our-panel`, `success-stories`, `blog`, `contact`, plus legal pages (`terms`, `privacy-policy`, `cookie-policy`). Header/Footer are imported into all of them; AssessmentForm is the contact form.
 
