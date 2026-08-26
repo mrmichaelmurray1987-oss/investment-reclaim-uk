@@ -1,7 +1,116 @@
 {
   "cleanUrls": false,
+  "trailingSlash": false,
+  "redirects": [
+    {
+      "source": "/index.dc.html",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/claim-check.dc.html",
+      "destination": "/claim",
+      "permanent": true
+    },
+    {
+      "source": "/how-it-works.dc.html",
+      "destination": "/how-it-works",
+      "permanent": true
+    },
+    {
+      "source": "/our-panel.dc.html",
+      "destination": "/our-panel",
+      "permanent": true
+    },
+    {
+      "source": "/claims.dc.html",
+      "destination": "/claims",
+      "permanent": true
+    },
+    {
+      "source": "/success-stories.dc.html",
+      "destination": "/success-stories",
+      "permanent": true
+    },
+    {
+      "source": "/blog.dc.html",
+      "destination": "/blog",
+      "permanent": true
+    },
+    {
+      "source": "/faq.dc.html",
+      "destination": "/faq",
+      "permanent": true
+    },
+    {
+      "source": "/contact.dc.html",
+      "destination": "/contact",
+      "permanent": true
+    },
+    {
+      "source": "/privacy-policy.dc.html",
+      "destination": "/privacy",
+      "permanent": true
+    },
+    {
+      "source": "/cookie-policy.dc.html",
+      "destination": "/cookies",
+      "permanent": true
+    },
+    {
+      "source": "/terms.dc.html",
+      "destination": "/terms",
+      "permanent": true
+    }
+  ],
   "rewrites": [
-    { "source": "/", "destination": "/index.dc.html" },
-    { "source": "/claim", "destination": "/claim-check.dc.html" }
+    {
+      "source": "/",
+      "destination": "/index.dc.html"
+    },
+    {
+      "source": "/claim",
+      "destination": "/claim-check.dc.html"
+    },
+    {
+      "source": "/how-it-works",
+      "destination": "/how-it-works.dc.html"
+    },
+    {
+      "source": "/our-panel",
+      "destination": "/our-panel.dc.html"
+    },
+    {
+      "source": "/claims",
+      "destination": "/claims.dc.html"
+    },
+    {
+      "source": "/success-stories",
+      "destination": "/success-stories.dc.html"
+    },
+    {
+      "source": "/blog",
+      "destination": "/blog.dc.html"
+    },
+    {
+      "source": "/faq",
+      "destination": "/faq.dc.html"
+    },
+    {
+      "source": "/contact",
+      "destination": "/contact.dc.html"
+    },
+    {
+      "source": "/privacy",
+      "destination": "/privacy-policy.dc.html"
+    },
+    {
+      "source": "/cookies",
+      "destination": "/cookie-policy.dc.html"
+    },
+    {
+      "source": "/terms",
+      "destination": "/terms.dc.html"
+    }
   ]
 }
