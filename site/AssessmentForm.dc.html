@@ -147,6 +147,9 @@ class Component extends DCLogic {
           consentPage: (function () { try { return window.location.href; } catch (err) { return ''; } })()
         };
         const mailtoFallback = () => {
+          // Never carry an unconsented enquiry onward. The fallback exists for a
+          // broken network, not as a way around the consent gate.
+          if (!payload.consent) return false;
           const body = [
             'New eligibility-check enquiry — Investment Reclaim UK', '',
             'Name: ' + payload.name, 'Email: ' + payload.email, 'Phone: ' + payload.phone,
@@ -160,12 +163,22 @@ class Component extends DCLogic {
             'Wording shown: ' + payload.consentText
           ].join('\n');
           try { window.location.href = 'mailto:info@investmentreclaimuk.co.uk?subject=' + encodeURIComponent('Eligibility Check — ' + (payload.name || 'New enquiry')) + '&body=' + encodeURIComponent(body); } catch (err) {}
+          return true;
         };
         // Try the Resend-backed serverless endpoint first; fall back to mailto.
+        // A 422 is the server refusing the enquiry for missing consent. Do not fall
+        // back and do not show the thank-you screen in that case: nothing was sent,
+        // so claiming otherwise would be a lie on the record.
         fetch('/api/send', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) })
-          .then((r) => { if (!r.ok) throw new Error('bad status'); })
-          .catch(() => { mailtoFallback(); })
-          .finally(() => { this.setState({ submitted: true }); });
+          .then((r) => {
+            if (r.status === 422) { const refused = new Error('consent refused'); refused.consentRefused = true; throw refused; }
+            if (!r.ok) throw new Error('bad status');
+            this.setState({ submitted: true });
+          })
+          .catch((err) => {
+            if (err && err.consentRefused) return;
+            if (mailtoFallback()) this.setState({ submitted: true });
+          });
       }
     };
   }
