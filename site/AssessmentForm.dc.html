@@ -15,89 +15,205 @@
   .arp-submit:hover { background:#C9A227 !important; color:#0F172A !important; box-shadow:0 10px 30px -8px rgba(201,162,39,0.5) !important; }
   .arp-submit { transition: background .25s ease, color .25s ease, box-shadow .25s ease, transform .1s ease; }
   .arp-submit:active { transform: translateY(1px); }
+  .arp-submit svg { transition: transform .25s ease; }
+  .arp-submit:hover svg { transform: translateX(4px); }
+
+  /* An investment claim is a chronology, so the questions sit on one: three
+     groups threaded on a single spine rather than twelve fields in a wall. */
+  .arp-spine { position:relative; padding-left:30px; }
+  .arp-spine::before {
+    content:""; position:absolute; left:5px; top:7px; bottom:10px; width:1px;
+    background:linear-gradient(180deg,#C9A227 0 34px,rgba(30,58,95,0.22) 34px 100%);
+  }
+  .arp-group { position:relative; }
+  .arp-group::before {
+    content:""; position:absolute; left:-29px; top:4px; width:11px; height:11px;
+    border-radius:50%; background:#fff; border:2px solid rgba(30,58,95,0.38);
+  }
+  .arp-group.is-first::before { border-color:#C9A227; }
+  .arp-2col { display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+  @media (max-width:560px) {
+    .arp-spine { padding-left:24px; }
+    .arp-group::before { left:-23px; }
+    .arp-2col { grid-template-columns:1fr; gap:14px; }
+  }
+  @media (prefers-reduced-motion: reduce) { .arp-submit, .arp-submit svg, .arp-field input, .arp-field select, .arp-field textarea { transition:none !important; } }
 </style>
 </helmet>
 <div style="font-family:'Inter',system-ui,sans-serif; width:100%;">
 
   <sc-if value="{{ showForm }}" hint-placeholder-val="{{ true }}">
-  <form onSubmit="{{ onSubmit }}" class="arp-field" style="display:flex; flex-direction:column; gap:18px; width:100%;">
+  <form onSubmit="{{ onSubmit }}" class="arp-field" style="display:flex; flex-direction:column; gap:22px; width:100%;">
 
-    <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:16px;">
-      <label style="display:flex; flex-direction:column; gap:7px;">
-        <span style="font-size:12px; font-weight:600; letter-spacing:0.04em; text-transform:uppercase; color:#1E3A5F;">Full name</span>
-        <input type="text" name="name" required placeholder="e.g. James Whitfield" style="width:100%; box-sizing:border-box; padding:13px 15px; border:1px solid #d8dee8; border-radius:9px; font-family:'Inter',sans-serif; font-size:16px; color:#1E2937; background:#fff;" />
+    <div class="arp-spine" style="display:flex; flex-direction:column; gap:26px;">
+
+      <!-- 1. What it was, and who put them into it -->
+      <div class="arp-group is-first">
+        <p style="margin:0 0 3px; font-size:12px; font-weight:700; letter-spacing:0.10em; text-transform:uppercase; color:#1E3A5F;">The investment</p>
+        <p style="margin:0 0 15px; font-size:13.5px; color:#64748B;">What it was, and who put you into it.</p>
+
+        <div class="arp-2col" style="margin-bottom:16px;">
+          <label style="display:flex; flex-direction:column; gap:7px;">
+            <span style="font-size:12px; font-weight:600; letter-spacing:0.04em; text-transform:uppercase; color:#1E3A5F;">What was the investment?</span>
+            <select name="investmentType" required style="width:100%; box-sizing:border-box; padding:13px 15px; border:1px solid #d8dee8; border-radius:9px; font-family:'Inter',sans-serif; font-size:16px; color:#1E2937; background:#fff; appearance:none;">
+              <option value="">Choose one</option>
+              <option value="pension_transfer">Pension transfer</option>
+              <option value="sipp">SIPP</option>
+              <option value="crypto">Crypto</option>
+              <option value="whiskey_casks">Whisky casks</option>
+              <option value="carbon_credits">Carbon credits</option>
+              <option value="farming">Farming or land</option>
+              <option value="art">Art or collectables</option>
+              <option value="other">Something else</option>
+            </select>
+          </label>
+          <label style="display:flex; flex-direction:column; gap:7px;">
+            <span style="font-size:12px; font-weight:600; letter-spacing:0.04em; text-transform:uppercase; color:#1E3A5F;">Roughly when</span>
+            <select name="investedYearBand" required style="width:100%; box-sizing:border-box; padding:13px 15px; border:1px solid #d8dee8; border-radius:9px; font-family:'Inter',sans-serif; font-size:16px; color:#1E2937; background:#fff; appearance:none;">
+              <option value="">Choose one</option>
+              <option value="before_2012">Before 2012</option>
+              <option value="2012_2015">2012 to 2015</option>
+              <option value="2016_2019">2016 to 2019</option>
+              <option value="2020_2023">2020 to 2023</option>
+              <option value="2024_plus">2024 or later</option>
+              <option value="not_sure">Not sure</option>
+            </select>
+          </label>
+        </div>
+
+        <div class="arp-2col">
+          <label style="display:flex; flex-direction:column; gap:7px;">
+            <span style="font-size:12px; font-weight:600; letter-spacing:0.04em; text-transform:uppercase; color:#1E3A5F;">Who advised you or sold it to you?</span>
+            <input type="text" name="adviserOrFirm" required maxlength="200" placeholder="Firm or adviser name" style="width:100%; box-sizing:border-box; padding:13px 15px; border:1px solid #d8dee8; border-radius:9px; font-family:'Inter',sans-serif; font-size:16px; color:#1E2937; background:#fff;" />
+          </label>
+          <label style="display:flex; flex-direction:column; gap:7px;">
+            <span style="font-size:12px; font-weight:600; letter-spacing:0.04em; text-transform:uppercase; color:#1E3A5F;">Did you take UK financial advice?</span>
+            <select name="tookUkAdvice" required style="width:100%; box-sizing:border-box; padding:13px 15px; border:1px solid #d8dee8; border-radius:9px; font-family:'Inter',sans-serif; font-size:16px; color:#1E2937; background:#fff; appearance:none;">
+              <option value="">Choose one</option>
+              <option value="yes">Yes</option>
+              <option value="no">No</option>
+              <option value="not_sure">Not sure</option>
+            </select>
+          </label>
+        </div>
+      </div>
+
+      <!-- 2. Where things stand today -->
+      <div class="arp-group">
+        <p style="margin:0 0 3px; font-size:12px; font-weight:700; letter-spacing:0.10em; text-transform:uppercase; color:#1E3A5F;">What has happened since</p>
+        <p style="margin:0 0 15px; font-size:13.5px; color:#64748B;">Where things stand today.</p>
+
+        <div class="arp-2col" style="margin-bottom:16px;">
+          <label style="display:flex; flex-direction:column; gap:7px;">
+            <span style="font-size:12px; font-weight:600; letter-spacing:0.04em; text-transform:uppercase; color:#1E3A5F;">Do you still hold it?</span>
+            <select name="stillHeld" required style="width:100%; box-sizing:border-box; padding:13px 15px; border:1px solid #d8dee8; border-radius:9px; font-family:'Inter',sans-serif; font-size:16px; color:#1E2937; background:#fff; appearance:none;">
+              <option value="">Choose one</option>
+              <option value="true">Yes</option>
+              <option value="false">No</option>
+            </select>
+          </label>
+          <label style="display:flex; flex-direction:column; gap:7px;">
+            <span style="font-size:12px; font-weight:600; letter-spacing:0.04em; text-transform:uppercase; color:#1E3A5F;">Complained already?</span>
+            <select name="complainedAlready" required style="width:100%; box-sizing:border-box; padding:13px 15px; border:1px solid #d8dee8; border-radius:9px; font-family:'Inter',sans-serif; font-size:16px; color:#1E2937; background:#fff; appearance:none;">
+              <option value="">Choose one</option>
+              <option value="no">No</option>
+              <option value="to_firm">Yes, to the firm</option>
+              <option value="to_ombudsman">Yes, to the Ombudsman</option>
+              <option value="not_sure">Not sure</option>
+            </select>
+          </label>
+        </div>
+
+        <label style="display:flex; flex-direction:column; gap:7px; margin-bottom:16px;">
+          <span style="font-size:12px; font-weight:600; letter-spacing:0.04em; text-transform:uppercase; color:#1E3A5F;">Have you used another claims company for this?</span>
+          <select name="usedOtherClaimsCompany" required style="width:100%; box-sizing:border-box; padding:13px 15px; border:1px solid #d8dee8; border-radius:9px; font-family:'Inter',sans-serif; font-size:16px; color:#1E2937; background:#fff; appearance:none;">
+            <option value="">Choose one</option>
+            <option value="false">No</option>
+            <option value="true">Yes</option>
+          </select>
+        </label>
+
+        <label style="display:flex; flex-direction:column; gap:7px;">
+          <span style="font-size:12px; font-weight:600; letter-spacing:0.04em; text-transform:uppercase; color:#1E3A5F;">In your own words, what happened?</span>
+          <textarea name="summary" required rows="4" maxlength="5000" placeholder="How it was sold to you, what you were told, and what has happened since. No detail is too small." style="width:100%; box-sizing:border-box; padding:13px 15px; border:1px solid #d8dee8; border-radius:9px; font-family:'Inter',sans-serif; font-size:16px; line-height:1.5; color:#1E2937; background:#fff; resize:vertical;"></textarea>
+        </label>
+      </div>
+
+      <!-- 3. How to reach them -->
+      <div class="arp-group">
+        <p style="margin:0 0 3px; font-size:12px; font-weight:700; letter-spacing:0.10em; text-transform:uppercase; color:#1E3A5F;">How we reach you</p>
+        <p style="margin:0 0 15px; font-size:13.5px; color:#64748B;">So the right person can call you back.</p>
+
+        <div class="arp-2col" style="margin-bottom:16px;">
+          <label style="display:flex; flex-direction:column; gap:7px;">
+            <span style="font-size:12px; font-weight:600; letter-spacing:0.04em; text-transform:uppercase; color:#1E3A5F;">Full name</span>
+            <input type="text" name="name" required placeholder="e.g. James Whitfield" style="width:100%; box-sizing:border-box; padding:13px 15px; border:1px solid #d8dee8; border-radius:9px; font-family:'Inter',sans-serif; font-size:16px; color:#1E2937; background:#fff;" />
+          </label>
+          <label style="display:flex; flex-direction:column; gap:7px;">
+            <span style="font-size:12px; font-weight:600; letter-spacing:0.04em; text-transform:uppercase; color:#1E3A5F;">Email address</span>
+            <input type="email" name="email" required placeholder="you@email.com" style="width:100%; box-sizing:border-box; padding:13px 15px; border:1px solid #d8dee8; border-radius:9px; font-family:'Inter',sans-serif; font-size:16px; color:#1E2937; background:#fff;" />
+          </label>
+        </div>
+
+        <div class="arp-2col" style="margin-bottom:16px;">
+          <label style="display:flex; flex-direction:column; gap:7px;">
+            <span style="font-size:12px; font-weight:600; letter-spacing:0.04em; text-transform:uppercase; color:#1E3A5F;">Phone number</span>
+            <input type="tel" name="phone" required placeholder="07000 000000" style="width:100%; box-sizing:border-box; padding:13px 15px; border:1px solid #d8dee8; border-radius:9px; font-family:'Inter',sans-serif; font-size:16px; color:#1E2937; background:#fff;" />
+          </label>
+          <label style="display:flex; flex-direction:column; gap:7px;">
+            <span style="font-size:12px; font-weight:600; letter-spacing:0.04em; text-transform:uppercase; color:#1E3A5F;">Postcode</span>
+            <input type="text" name="postcode" required maxlength="10" autocomplete="postal-code" placeholder="LS1 1AA" style="width:100%; box-sizing:border-box; padding:13px 15px; border:1px solid #d8dee8; border-radius:9px; font-family:'Inter',sans-serif; font-size:16px; color:#1E2937; background:#fff;" />
+          </label>
+        </div>
+
+        <div class="arp-2col">
+          <label style="display:flex; flex-direction:column; gap:7px;">
+            <span style="font-size:12px; font-weight:600; letter-spacing:0.04em; text-transform:uppercase; color:#1E3A5F;">Best time to call <span style="font-weight:500; letter-spacing:0; text-transform:none; color:#94a3b8;">(optional)</span></span>
+            <input type="text" name="preferredContactTime" maxlength="40" placeholder="e.g. evenings" style="width:100%; box-sizing:border-box; padding:13px 15px; border:1px solid #d8dee8; border-radius:9px; font-family:'Inter',sans-serif; font-size:16px; color:#1E2937; background:#fff;" />
+          </label>
+          <label style="display:flex; flex-direction:column; gap:7px;">
+            <span style="font-size:12px; font-weight:600; letter-spacing:0.04em; text-transform:uppercase; color:#1E3A5F;">Where did you hear about us? <span style="font-weight:500; letter-spacing:0; text-transform:none; color:#94a3b8;">(optional)</span></span>
+            <input type="text" name="howHeard" maxlength="120" placeholder="e.g. Google" style="width:100%; box-sizing:border-box; padding:13px 15px; border:1px solid #d8dee8; border-radius:9px; font-family:'Inter',sans-serif; font-size:16px; color:#1E2937; background:#fff;" />
+          </label>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Consent gets a panel of its own rather than being fine print. Two
+         separate boxes: agreeing to be contacted is not agreeing to marketing.
+         The wording here must stay word for word identical to
+         INVESTMENT_CONSENT_TEXT and INVESTMENT_MARKETING_TEXT in the CRM's
+         src/lib/consent.ts, which stores its own copy as the record of what
+         was shown. Change one, change both, and bump the version stamp. -->
+    <div style="background:#F8FAFC; border:1px solid #e7edf4; border-left:3px solid #C9A227; border-radius:12px; padding:20px 22px;">
+      <p style="margin:0 0 14px; font-size:12px; font-weight:700; letter-spacing:0.10em; text-transform:uppercase; color:#1E3A5F;">Your permission</p>
+
+      <label style="display:flex; gap:12px; align-items:flex-start; cursor:pointer;">
+        <input type="checkbox" name="consent" required style="margin-top:3px; width:17px; height:17px; accent-color:#1E3A5F; flex:none;" />
+        <span style="font-size:14px; line-height:1.6; color:#475569;">
+          <span style="display:block; font-size:11px; font-weight:700; letter-spacing:0.08em; text-transform:uppercase; color:#1E3A5F; margin-bottom:5px;">Required</span>
+          <span data-consent-text>I agree that Investment Reclaim UK (a trading style of Coresight Creative Limited) may use the details I have given to consider my enquiry, and may share them with a solicitor or an authorised claims management company so they can consider whether they are able to help. I understand I may be contacted about my enquiry by phone, text message, WhatsApp or email. I understand Investment Reclaim UK is not a law firm and does not give advice.</span>
+        </span>
       </label>
-      <label style="display:flex; flex-direction:column; gap:7px;">
-        <span style="font-size:12px; font-weight:600; letter-spacing:0.04em; text-transform:uppercase; color:#1E3A5F;">Email address</span>
-        <input type="email" name="email" required placeholder="you@email.com" style="width:100%; box-sizing:border-box; padding:13px 15px; border:1px solid #d8dee8; border-radius:9px; font-family:'Inter',sans-serif; font-size:16px; color:#1E2937; background:#fff;" />
+
+      <label style="display:flex; gap:12px; align-items:flex-start; cursor:pointer; margin-top:16px; padding-top:16px; border-top:1px solid #e2e8f0;">
+        <input type="checkbox" name="marketingOptIn" style="margin-top:3px; width:17px; height:17px; accent-color:#1E3A5F; flex:none;" />
+        <span style="font-size:14px; line-height:1.6; color:#475569;">
+          <span style="display:block; font-size:11px; font-weight:700; letter-spacing:0.08em; text-transform:uppercase; color:#94a3b8; margin-bottom:5px;">Optional</span>
+          <span data-marketing-text>I would also like to receive occasional updates from Investment Reclaim UK about investment mis-selling. I can stop these at any time.</span>
+        </span>
       </label>
     </div>
 
-    <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:16px;">
-      <label style="display:flex; flex-direction:column; gap:7px;">
-        <span style="font-size:12px; font-weight:600; letter-spacing:0.04em; text-transform:uppercase; color:#1E3A5F;">Phone number</span>
-        <input type="tel" name="phone" required placeholder="07000 000000" style="width:100%; box-sizing:border-box; padding:13px 15px; border:1px solid #d8dee8; border-radius:9px; font-family:'Inter',sans-serif; font-size:16px; color:#1E2937; background:#fff;" />
-      </label>
-      <label style="display:flex; flex-direction:column; gap:7px;">
-        <span style="font-size:12px; font-weight:600; letter-spacing:0.04em; text-transform:uppercase; color:#1E3A5F;">Approx. amount invested</span>
-        <select name="amount" required style="width:100%; box-sizing:border-box; padding:13px 15px; border:1px solid #d8dee8; border-radius:9px; font-family:'Inter',sans-serif; font-size:16px; color:#1E2937; background:#fff; appearance:none;">
-          <option value="">Please select…</option>
-          <option>Under £25,000</option>
-          <option>£25,000 – £50,000</option>
-          <option>£50,000 – £100,000</option>
-          <option>£100,000 – £250,000</option>
-          <option>£250,000+</option>
-        </select>
-      </label>
-    </div>
-
-    <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:16px;">
-      <label style="display:flex; flex-direction:column; gap:7px;">
-        <span style="font-size:12px; font-weight:600; letter-spacing:0.04em; text-transform:uppercase; color:#1E3A5F;">Scheme or company name</span>
-        <select name="scheme" style="width:100%; box-sizing:border-box; padding:13px 15px; border:1px solid #d8dee8; border-radius:9px; font-family:'Inter',sans-serif; font-size:16px; color:#1E2937; background:#fff; appearance:none;">
-          <option value="">Please select…</option>
-          <option>EXB</option>
-          <option>AH Group</option>
-          <option>Acacia Capital</option>
-          <option>Agventure Farms</option>
-          <option>Starling</option>
-          <option>Mis-sold pension / SIPP</option>
-          <option>Cryptocurrency platform</option>
-          <option>Forex / CFD trading</option>
-          <option>Land banking / overseas property</option>
-          <option>Other</option>
-          <option>I'm not sure</option>
-        </select>
-      </label>
-      <label style="display:flex; flex-direction:column; gap:7px;">
-        <span style="font-size:12px; font-weight:600; letter-spacing:0.04em; text-transform:uppercase; color:#1E3A5F;">Approx. year of investment</span>
-        <select name="year" style="width:100%; box-sizing:border-box; padding:13px 15px; border:1px solid #d8dee8; border-radius:9px; font-family:'Inter',sans-serif; font-size:16px; color:#1E2937; background:#fff; appearance:none;">
-          <option value="">Please select…</option>
-          <option>2025 – 2026</option>
-          <option>2023 – 2024</option>
-          <option>2021 – 2022</option>
-          <option>2018 – 2020</option>
-          <option>2015 – 2017</option>
-          <option>Before 2015</option>
-        </select>
-      </label>
-    </div>
-
-    <label style="display:flex; flex-direction:column; gap:7px;">
-      <span style="font-size:12px; font-weight:600; letter-spacing:0.04em; text-transform:uppercase; color:#1E3A5F;">Briefly, what happened?</span>
-      <textarea name="description" rows="3" placeholder="A few lines about the investment and your concerns. No detail is too small." style="width:100%; box-sizing:border-box; padding:13px 15px; border:1px solid #d8dee8; border-radius:9px; font-family:'Inter',sans-serif; font-size:16px; line-height:1.5; color:#1E2937; background:#fff; resize:vertical;"></textarea>
-    </label>
-
-    <label style="display:flex; gap:11px; align-items:flex-start; cursor:pointer;">
-      <input type="checkbox" name="consent" required style="margin-top:3px; width:17px; height:17px; accent-color:#1E3A5F; flex:none;" />
-      <span data-consent-text style="font-size:13px; line-height:1.55; color:#64748B;">I consent to Investment Reclaim UK reviewing my enquiry and, where appropriate, introducing me to a regulated solicitor from its panel. I have read the <a href="#footer" style="color:#1E3A5F; text-decoration:underline;">privacy notice</a>.</span>
-    </label>
-
-    <button type="submit" class="arp-submit" style="width:100%; padding:17px 24px; border:none; border-radius:10px; background:#0F172A; color:#F8FAFC; font-family:'Inter',sans-serif; font-size:16px; font-weight:600; letter-spacing:0.01em; cursor:pointer;">Request My Free Assessment →</button>
+    <button type="submit" class="arp-submit" style="width:100%; padding:18px 24px; border:none; border-radius:999px; background:#0F172A; color:#F8FAFC; font-family:'Inter',sans-serif; font-size:16.5px; font-weight:600; letter-spacing:0.01em; cursor:pointer; display:flex; align-items:center; justify-content:center; gap:10px;">
+      Send my enquiry
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+    </button>
 
     <p style="display:flex; align-items:center; justify-content:center; gap:8px; margin:2px 0 0; font-size:12.5px; color:#64748B; text-align:center;">
       <span style="display:inline-flex; width:15px; height:15px; align-items:center; justify-content:center; color:#1E8A5B;">🔒</span>
-      Encrypted &amp; handled in strict confidence under GDPR. We respond within 24 hours.
+      Handled in confidence under UK GDPR. We reply within one working day.
     </p>
   </form>
   </sc-if>
@@ -107,18 +223,18 @@
     <div style="width:74px; height:74px; margin:0 auto 22px; border-radius:50%; background:rgba(201,162,39,0.12); display:flex; align-items:center; justify-content:center; border:1.5px solid rgba(201,162,39,0.45);">
       <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#C9A227" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
     </div>
-    <h3 style="font-family:'Spectral',Georgia,serif; font-weight:600; font-size:26px; color:#0F172A; margin:0 0 12px;">Thank you — your request is received.</h3>
-    <p style="font-size:16px; line-height:1.65; color:#64748B; max-width:440px; margin:0 auto 22px;">A member of the claims team will review your enquiry in confidence and contact you within <strong style="color:#1E2937;">24 hours</strong>. If your case is suitable, we will introduce you to the right specialist solicitor from our panel — with no obligation.</p>
+    <h3 style="font-family:'Spectral',Georgia,serif; font-weight:600; font-size:26px; color:#0F172A; margin:0 0 12px;">Thank you — your enquiry is received.</h3>
+    <p style="font-size:16px; line-height:1.65; color:#64748B; max-width:440px; margin:0 auto 22px;">A member of the team will read your enquiry in confidence and contact you within <strong style="color:#1E2937;">one working day</strong>. If it is something a specialist can look at, we will introduce you to one — with no obligation.</p>
     <div style="display:inline-flex; flex-direction:column; gap:10px; text-align:left; background:#F8FAFC; border:1px solid #e7edf4; border-radius:12px; padding:18px 22px; max-width:380px;">
       <span style="font-size:12px; font-weight:600; letter-spacing:0.06em; text-transform:uppercase; color:#1E3A5F;">What happens next</span>
-      <span style="font-size:14.5px; line-height:1.6; color:#475569;">1. Confidential review of your enquiry<br/>2. A short, no-pressure call to confirm details<br/>3. Introduction to your matched solicitor</span>
+      <span style="font-size:14.5px; line-height:1.6; color:#475569;">1. We read your enquiry in confidence<br/>2. A short, no-pressure call to confirm the details<br/>3. An introduction to the right specialist, if there is one</span>
     </div>
   </div>
   </sc-if>
 
 </div>
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:640,&quot;height&quot;:680}}">
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:640,&quot;height&quot;:1180}}">
 class Component extends DCLogic {
   state = { submitted: false };
   renderVals() {
@@ -130,19 +246,37 @@ class Component extends DCLogic {
         const form = e.target;
         const fd = new FormData(form);
         const g = (k) => (fd.get(k) || '').toString().trim();
-        // Read the consent wording straight out of the DOM rather than repeating it
-        // here, so the text we record is provably the text the person was shown.
-        let consentText = '';
-        try {
-          const el = form.querySelector('[data-consent-text]');
-          if (el) consentText = (el.innerText || el.textContent || '').replace(/\s+/g, ' ').trim();
-        } catch (err) {}
+        // The two Yes/No questions come back as the strings 'true'/'false' from
+        // their selects; the CRM wants real booleans.
+        const bool = (k) => g(k) === 'true';
+        // Read both consent wordings straight out of the DOM rather than
+        // repeating them here, so the text recorded is provably the text the
+        // person was shown.
+        const wording = (sel) => {
+          try {
+            const el = form.querySelector(sel);
+            return el ? (el.innerText || el.textContent || '').replace(/\s+/g, ' ').trim() : '';
+          } catch (err) { return ''; }
+        };
         const payload = {
           name: g('name'), email: g('email'), phone: g('phone'),
-          amount: g('amount'), scheme: g('scheme'), year: g('year'),
-          description: g('description'),
+          postcode: g('postcode'),
+          investmentType: g('investmentType'),
+          investedYearBand: g('investedYearBand'),
+          adviserOrFirm: g('adviserOrFirm'),
+          tookUkAdvice: g('tookUkAdvice'),
+          stillHeld: bool('stillHeld'),
+          complainedAlready: g('complainedAlready'),
+          usedOtherClaimsCompany: bool('usedOtherClaimsCompany'),
+          summary: g('summary'),
+          howHeard: g('howHeard'),
+          preferredContactTime: g('preferredContactTime'),
           consent: fd.get('consent') ? true : false,
-          consentText: consentText,
+          // Separate and optional. Ticking this is not consent to be contacted
+          // about the enquiry, and vice versa.
+          marketingOptIn: fd.get('marketingOptIn') ? true : false,
+          consentText: wording('[data-consent-text]'),
+          marketingText: wording('[data-marketing-text]'),
           consentTimestamp: new Date().toISOString(),
           consentPage: (function () { try { return window.location.href; } catch (err) { return ''; } })()
         };
@@ -151,18 +285,28 @@ class Component extends DCLogic {
           // broken network, not as a way around the consent gate.
           if (!payload.consent) return false;
           const body = [
-            'New eligibility-check enquiry — Investment Reclaim UK', '',
+            'New enquiry — Investment Reclaim UK', '',
             'Name: ' + payload.name, 'Email: ' + payload.email, 'Phone: ' + payload.phone,
-            'Approx. amount invested / lost: ' + payload.amount, 'Scheme / company: ' + payload.scheme,
-            'Approx. year of investment: ' + payload.year,
-            '', 'What happened:', payload.description,
+            'Postcode: ' + payload.postcode,
+            'Investment: ' + payload.investmentType,
+            'Roughly when: ' + payload.investedYearBand,
+            'Adviser or firm: ' + payload.adviserOrFirm,
+            'Took UK advice: ' + payload.tookUkAdvice,
+            'Still held: ' + (payload.stillHeld ? 'Yes' : 'No'),
+            'Complained already: ' + payload.complainedAlready,
+            'Used another claims company: ' + (payload.usedOtherClaimsCompany ? 'Yes' : 'No'),
+            'Best time to call: ' + payload.preferredContactTime,
+            'How they heard: ' + payload.howHeard,
+            '', 'What happened:', payload.summary,
             '', '--- Consent record ---',
             'Consent given: ' + (payload.consent ? 'YES' : 'NO'),
+            'Marketing opt-in: ' + (payload.marketingOptIn ? 'YES' : 'NO'),
             'Ticked at (browser): ' + payload.consentTimestamp,
             'Page: ' + payload.consentPage,
-            'Wording shown: ' + payload.consentText
+            'Wording shown: ' + payload.consentText,
+            'Marketing wording shown: ' + payload.marketingText
           ].join('\n');
-          try { window.location.href = 'mailto:info@investmentreclaimuk.co.uk?subject=' + encodeURIComponent('Eligibility Check — ' + (payload.name || 'New enquiry')) + '&body=' + encodeURIComponent(body); } catch (err) {}
+          try { window.location.href = 'mailto:info@investmentreclaimuk.co.uk?subject=' + encodeURIComponent('Enquiry — ' + (payload.name || 'New enquiry')) + '&body=' + encodeURIComponent(body); } catch (err) {}
           return true;
         };
         // Try the Resend-backed serverless endpoint first; fall back to mailto.
