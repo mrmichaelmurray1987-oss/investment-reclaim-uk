@@ -12,12 +12,15 @@
 //   1. Emails the lead to info@investmentreclaimuk.co.uk (via Resend)        [required]
 //   2. Sends the lead an instant branded auto-reply (via Resend)             [best-effort]
 //
-// Brevo was removed on 2026-08-28 (account cancelled; the claims CRM takes over
-// lead intake under Plan 3). The notification email is the record of each lead
-// until then.
+// Brevo was removed on 2026-08-28. Since Plan 3 the enquiry is ALSO posted to
+// the claims CRM (step 3). The email above remains the record of truth: the CRM
+// post is best-effort, its failure is logged and never shown to the visitor, and
+// the enquiry still reaches info@ exactly as before if the CRM is unreachable.
 //
 // Vercel environment variables used:
 //   RESEND_API_KEY          (required)  — from resend.com
+//   CRM_INTAKE_URL          (optional)  — base URL of the CRM intake API
+//   CRM_INTAKE_KEY          (optional)  — shared secret; both or neither
 
 module.exports = async function handler(req, res) {
   if (req.method !== 'POST') {
@@ -38,10 +41,30 @@ module.exports = async function handler(req, res) {
   const name        = clean(data.name)        || 'Not provided';
   const email       = clean(data.email)       || 'Not provided';
   const phone       = clean(data.phone)       || 'Not provided';
-  const amount      = clean(data.amount)      || 'Not provided';
-  const scheme      = clean(data.scheme)      || 'Not provided';
-  const year        = clean(data.year)        || 'Not provided';
-  const description = clean(data.description) || '—';
+  const postcode    = clean(data.postcode)    || 'Not provided';
+  const summary     = clean(data.summary)     || '—';
+
+  // The seven screening answers. Stored as the CRM's own enum values, with a
+  // plain-English label alongside for the notification email.
+  const investmentType    = clean(data.investmentType);
+  const investedYearBand  = clean(data.investedYearBand);
+  const adviserOrFirm     = clean(data.adviserOrFirm)  || 'Not provided';
+  const tookUkAdvice      = clean(data.tookUkAdvice);
+  const complainedAlready = clean(data.complainedAlready);
+  const stillHeld              = data.stillHeld === true || data.stillHeld === 'true';
+  const usedOtherClaimsCompany = data.usedOtherClaimsCompany === true || data.usedOtherClaimsCompany === 'true';
+  const howHeard             = clean(data.howHeard)             || 'Not given';
+  const preferredContactTime = clean(data.preferredContactTime) || 'Not given';
+
+  const LABEL = {
+    art: 'Art or collectables', whiskey_casks: 'Whisky casks', farming: 'Farming or land',
+    carbon_credits: 'Carbon credits', crypto: 'Crypto', pension_transfer: 'Pension transfer',
+    sipp: 'SIPP', other: 'Something else',
+    before_2012: 'Before 2012', '2012_2015': '2012 to 2015', '2016_2019': '2016 to 2019',
+    '2020_2023': '2020 to 2023', '2024_plus': '2024 or later', not_sure: 'Not sure',
+    yes: 'Yes', no: 'No', to_firm: 'Yes, to the firm', to_ombudsman: 'Yes, to the Ombudsman'
+  };
+  const label = (v) => LABEL[v] || (v || 'Not provided');
 
   if (name === 'Not provided' && email === 'Not provided' && phone === 'Not provided') {
     return res.status(400).json({ error: 'Empty submission.' });
@@ -68,14 +91,21 @@ module.exports = async function handler(req, res) {
   ) || 'Not recorded';
   const consentUserAgent = clean(req.headers['user-agent']) || 'Not recorded';
 
+  // Separate from the consent above: agreeing to be contacted about the enquiry
+  // is not agreeing to marketing, so it is recorded as its own fact.
+  const marketingOptIn = data.marketingOptIn === true || data.marketingOptIn === 'true' || data.marketingOptIn === 'on';
+  const marketingText = clean(data.marketingText) || '(wording not captured)';
+
   const consentRows = [
     ['Consent given', 'YES'],
+    ['Marketing opt-in', marketingOptIn ? 'YES' : 'No'],
     ['Ticked at (browser clock)', consentTickedAt],
     ['Received at (server, authoritative)', receivedAt],
     ['Submitted from page', consentPage],
     ['IP address', consentIp],
     ['Browser / device', consentUserAgent],
-    ['Exact wording shown', consentText]
+    ['Exact wording shown', consentText],
+    ['Marketing wording shown', marketingText]
   ];
 
   const hasEmail = /^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email);
@@ -83,15 +113,22 @@ module.exports = async function handler(req, res) {
   const firstName = nameParts[0] || '';
 
   const rows = [
-    ['Name', name], ['Email', email], ['Phone', phone],
-    ['Approx. amount invested / lost', amount], ['Scheme / company', scheme],
-    ['Approx. year of investment', year]
+    ['Name', name], ['Email', email], ['Phone', phone], ['Postcode', postcode],
+    ['What the investment was', label(investmentType)],
+    ['Roughly when', label(investedYearBand)],
+    ['Who advised or sold it', adviserOrFirm],
+    ['Took UK financial advice', label(tookUkAdvice)],
+    ['Still holds it', stillHeld ? 'Yes' : 'No'],
+    ['Complained already', label(complainedAlready)],
+    ['Used another claims company', usedOtherClaimsCompany ? 'Yes' : 'No'],
+    ['Best time to call', preferredContactTime],
+    ['How they heard of us', howHeard]
   ];
 
   // ---- 1. Internal notification to the team (required) ----
   const internalHtml = `
     <div style="font-family:Inter,Arial,sans-serif;color:#1E2937;max-width:560px;">
-      <h2 style="font-family:Georgia,serif;color:#0F172A;margin:0 0 4px;">New Free Claim Assessment</h2>
+      <h2 style="font-family:Georgia,serif;color:#0F172A;margin:0 0 4px;">New enquiry</h2>
       <p style="color:#64748B;margin:0 0 18px;font-size:14px;">Submitted via investmentreclaimuk.co.uk</p>
       <table style="width:100%;border-collapse:collapse;font-size:14px;">
         ${rows.map(([k, v]) => `<tr>
@@ -100,7 +137,7 @@ module.exports = async function handler(req, res) {
         </tr>`).join('')}
       </table>
       <p style="margin:18px 0 6px;font-weight:600;color:#1E3A5F;">What happened</p>
-      <p style="white-space:pre-wrap;line-height:1.6;color:#334155;font-size:14px;margin:0;">${description}</p>
+      <p style="white-space:pre-wrap;line-height:1.6;color:#334155;font-size:14px;margin:0;">${summary}</p>
       <p style="margin:24px 0 6px;font-weight:600;color:#1E3A5F;">Consent record</p>
       <p style="color:#64748B;margin:0 0 10px;font-size:12px;">Keep this. It is the evidence that consent was given, and what was shown when it was.</p>
       <table style="width:100%;border-collapse:collapse;font-size:13px;">
@@ -111,8 +148,8 @@ module.exports = async function handler(req, res) {
       </table>
     </div>`;
   const internalText = [
-    'New Free Claim Assessment (investmentreclaimuk.co.uk)', '',
-    ...rows.map(([k, v]) => `${k}: ${v}`), '', 'What happened:', description,
+    'New enquiry (investmentreclaimuk.co.uk)', '',
+    ...rows.map(([k, v]) => `${k}: ${v}`), '', 'What happened:', summary,
     '', '--- Consent record (keep this) ---',
     ...consentRows.map(([k, v]) => `${k}: ${v}`)
   ].join('\n');
@@ -128,7 +165,7 @@ module.exports = async function handler(req, res) {
       from: 'Investment Reclaim UK <enquiries@investmentreclaimuk.co.uk>',
       to: ['info@investmentreclaimuk.co.uk'],
       reply_to: hasEmail ? email : undefined,
-      subject: `Free Claim Assessment — ${name}`,
+      subject: `New enquiry — ${name}`,
       html: internalHtml, text: internalText
     });
     if (!r.ok) {
@@ -139,10 +176,57 @@ module.exports = async function handler(req, res) {
     return res.status(500).json({ error: 'Failed to send.', detail: String(err) });
   }
 
-  // ---- 2,3,4: best-effort side effects (never block the form) ----
+  // ---- best-effort side effects (never block the form) ----
   const tasks = [];
 
-  // 2. Auto-reply to the lead
+  // 2. Copy the enquiry into the claims CRM.
+  //
+  // Best-effort by design. The email above has already gone and is the record of
+  // truth, so a CRM that is down, slow or unconfigured must not change what the
+  // visitor sees. Failures are logged and swallowed. Both the URL and the key
+  // must be present: a URL without a key would post unauthenticated.
+  const crmBase = (process.env.CRM_INTAKE_URL || '').trim();
+  const crmKey  = (process.env.CRM_INTAKE_KEY || '').trim();
+  if (crmBase && crmKey) {
+    // Field names and enum values are the CRM's, verbatim. The amount is never
+    // sent because the form never asks it.
+    const crmPayload = {
+      firstName: (name === 'Not provided' ? '' : name).split(' ').filter(Boolean)[0] || name,
+      lastName: (name === 'Not provided' ? '' : name).split(' ').filter(Boolean).slice(1).join(' ') || '-',
+      phone: phone,
+      email: hasEmail ? email : '',
+      postcode: postcode,
+      investmentType: investmentType,
+      investedYearBand: investedYearBand,
+      adviserOrFirm: adviserOrFirm,
+      tookUkAdvice: tookUkAdvice,
+      stillHeld: stillHeld,
+      complainedAlready: complainedAlready,
+      usedOtherClaimsCompany: usedOtherClaimsCompany,
+      summary: summary,
+      howHeard: howHeard === 'Not given' ? '' : howHeard,
+      preferredContactTime: preferredContactTime === 'Not given' ? '' : preferredContactTime,
+      consent: true,
+      marketingOptIn: marketingOptIn
+    };
+    tasks.push(
+      fetch(`${crmBase.replace(/\/$/, '')}/investment`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'x-intake-key': crmKey,
+          'x-source-page': consentPage
+        },
+        body: JSON.stringify(crmPayload)
+      })
+        .then((r) => {
+          if (!r.ok) console.error(`CRM_INTAKE_FAILED HTTP ${r.status}`);
+        })
+        .catch((err) => { console.error('CRM_INTAKE_FAILED', String(err && err.message || err)); })
+    );
+  }
+
+  // 3. Auto-reply to the lead
   if (hasEmail) {
     const replyHtml = `
       <div style="font-family:Arial,Helvetica,sans-serif;color:#334155;max-width:560px;line-height:1.6;">
