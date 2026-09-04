@@ -317,6 +317,8 @@ class Component extends DCLogic {
           .then((r) => {
             if (r.status === 422) { const refused = new Error('consent refused'); refused.consentRefused = true; throw refused; }
             if (!r.ok) throw new Error('bad status');
+            // Confirmed send only. The mailto fallback below does not count.
+            if (window.irTrack) window.irTrack.lead();
             this.setState({ submitted: true });
           })
           .catch((err) => {

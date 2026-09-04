@@ -124,6 +124,8 @@ class Component extends DCLogic {
   }
   _set(v) {
     try { localStorage.setItem('arp-cookie-consent', v); } catch (e) {}
+    // Start or withhold tracking straight away, without a page reload.
+    if (window.irTrack) window.irTrack.consentUpdated(v);
     this.setState({ showBanner: false });
   }
   renderVals() {
